@@ -95,23 +95,47 @@ textarea:focus{border-color:#7280ff;box-shadow:0 0 0 5px #7280ff15;background:#f
 .understand-card p{color:#6d7d99;margin-bottom:16px}.newtext{border:0;border-radius:14px;padding:11px 15px;background:#eef3ff;color:#405bc2;font-weight:900}
 @media(max-width:900px){.setup-grid,.lesson-grid{grid-template-columns:1fr}.setup-side{display:none}.control-card{position:static}.result-strip{grid-template-columns:1fr 1fr}.result-main{grid-column:1/-1}.lower{grid-template-columns:1fr}}
 @media(max-width:620px){.app{padding:14px 10px 35px}.topbar{align-items:flex-start}.badge{display:none}.brand-mark{width:48px;height:48px;border-radius:15px}.brand h1{font-size:30px}.brand p{font-size:13px}.steps{gap:7px}.step{padding:11px 7px;justify-content:center;text-align:center;border-radius:18px}.step-icon{width:37px;height:37px;border-radius:12px;font-size:18px}.step div:last-child{display:none}.setup-main{padding:22px}.shell{border-radius:26px}.learn-wrap{padding:13px}.lesson-head{align-items:flex-start}.lesson-title h2{font-size:24px}.text{font-size:21px;padding:16px;border-radius:20px}.reading-card,.control-card,.practice-card,.understand-card{padding:14px;border-radius:22px}.result-strip{grid-template-columns:repeat(3,1fr)}.result-main{grid-column:1/-1}.stat{padding:10px 5px}.stat b{font-size:20px}}
+
+/* v2 visual polish — closer to the premium reading-app reference */
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:28px;align-items:center;margin:2px 0 26px}
+.logo-lockup{position:relative;padding:8px 8px 4px;text-align:left;direction:ltr;min-height:190px}
+.logo-primary,.logo-secondary{font-weight:1000;line-height:.82;letter-spacing:-4px;width:max-content;position:relative;z-index:2}
+.logo-primary{font-size:clamp(66px,8.5vw,112px);color:#fff;-webkit-text-stroke:7px #153b8d;paint-order:stroke fill;filter:drop-shadow(0 8px 0 #0e2f76) drop-shadow(0 18px 18px rgba(28,63,140,.16))}
+.logo-secondary{font-size:clamp(58px,7.8vw,104px);color:#ffd35c;-webkit-text-stroke:7px #153b8d;paint-order:stroke fill;margin-top:7px;filter:drop-shadow(0 8px 0 #0e2f76) drop-shadow(0 18px 18px rgba(28,63,140,.16))}
+.logo-tagline{font-size:clamp(17px,2vw,27px);font-weight:950;color:#183c86;margin:20px 0 0 10px;letter-spacing:-.4px}.logo-tagline b{color:#f5b62d;padding:0 5px}
+.logo-star{position:absolute;color:#ffd04d;-webkit-text-stroke:3px #fff;paint-order:stroke fill;font-size:38px;filter:drop-shadow(0 5px 8px rgba(233,166,0,.25));z-index:3}.star-a{right:14%;top:13px;transform:rotate(12deg)}.star-b{left:-4px;top:70px;transform:rotate(-14deg)}
+.hero-features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.hero-feature{background:rgba(255,255,255,.94);border:1px solid #e9eef8;border-radius:31px;padding:22px 14px;text-align:center;box-shadow:0 20px 45px rgba(42,69,117,.11);min-height:172px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px}
+.hero-feature strong{font-size:clamp(17px,1.55vw,23px);line-height:1.12;color:#14356f}
+.hero-icon{width:62px;height:62px;border-radius:20px;display:grid;place-items:center;color:#fff;font-size:29px;box-shadow:0 12px 24px rgba(35,74,150,.16)}
+.hero-icon.blue{background:linear-gradient(145deg,#4b92ff,#5268ff)}.hero-icon.orange{background:linear-gradient(145deg,#ffab36,#ff8127)}.hero-icon.green{background:linear-gradient(145deg,#43d27f,#1eae61)}
+.setup-side{background:radial-gradient(circle at 70% 20%,rgba(255,217,117,.58),transparent 27%),radial-gradient(circle at 15% 78%,rgba(119,190,255,.56),transparent 34%),linear-gradient(150deg,#eef6ff,#f7efff 54%,#fff7e9)}
+.mascot{transform:translateY(-2px);border:1px solid rgba(255,255,255,.95);box-shadow:0 28px 70px rgba(45,75,132,.18)}
+.mascot-visual{background:radial-gradient(circle at 48% 22%,#fff 0 8%,transparent 9%),linear-gradient(160deg,#d7eeff,#f2e9ff 58%,#fff1d6)}
+.card,.shell,.reading-card,.control-card,.practice-card,.understand-card,.result-strip{backdrop-filter:blur(8px)}
+.primary,.big-action{transition:transform .18s ease,box-shadow .18s ease}.primary:hover,.big-action:hover{transform:translateY(-2px)}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr}.logo-lockup{text-align:center}.logo-primary,.logo-secondary{margin-left:auto;margin-right:auto}.logo-tagline{margin-left:0}.hero-features{max-width:720px;margin:0 auto;width:100%}}
+@media(max-width:620px){.hero-grid{gap:14px}.logo-lockup{min-height:145px}.logo-primary{font-size:66px;-webkit-text-stroke:5px #153b8d}.logo-secondary{font-size:58px;-webkit-text-stroke:5px #153b8d}.logo-tagline{font-size:14px;margin-top:13px}.logo-star{font-size:28px}.hero-features{gap:7px}.hero-feature{border-radius:20px;min-height:112px;padding:12px 5px}.hero-icon{width:42px;height:42px;border-radius:13px;font-size:20px}.hero-feature strong{font-size:12px}}
+
 </style>
 </head>
 <body>
 <main class="app">
-  <div class="topbar">
-    <div class="brand">
-      <div class="brand-mark">★</div>
-      <div><h1>Read <span>English</span></h1><p>שומעים • קוראים • מתרגלים • משתפרים</p></div>
+  
+  <section class="hero-grid">
+    <div class="logo-lockup">
+      <span class="logo-star star-a">★</span>
+      <span class="logo-star star-b">★</span>
+      <div class="logo-primary">Read</div>
+      <div class="logo-secondary">in English</div>
+      <div class="logo-tagline">Listen <b>•</b> Read <b>•</b> Practice <b>•</b> Improve</div>
     </div>
-    <div class="badge">לומדים בקצב שלך</div>
-  </div>
-
-  <div class="steps">
-    <div class="step"><div class="step-icon">🔊</div><div><strong>שומעים</strong><small>הקראה ברורה של הטקסט</small></div></div>
-    <div class="step"><div class="step-icon">🎤</div><div><strong>קוראים בקול</strong><small>המערכת מקשיבה בזמן אמת</small></div></div>
-    <div class="step"><div class="step-icon">★</div><div><strong>משתפרים</strong><small>מגלים אילו מילים לתרגל</small></div></div>
-  </div>
+    <div class="hero-features">
+      <div class="hero-feature"><div class="hero-icon blue">🔊</div><strong>Listen<br>to the text</strong></div>
+      <div class="hero-feature"><div class="hero-icon orange">🎤</div><strong>Read<br>out loud</strong></div>
+      <div class="hero-feature"><div class="hero-icon green">★</div><strong>Get instant<br>feedback</strong></div>
+    </div>
+  </section>
 
   <section id="setup" class="shell setup-grid">
     <div class="setup-main">
