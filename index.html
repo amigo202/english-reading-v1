@@ -336,7 +336,7 @@ textarea:focus{border-color:#7280ff;box-shadow:0 0 0 5px #7280ff15;background:#f
             </div>
             <div class="control-group">
               <span class="control-label">⏱️ קצב הקראה</span>
-              <div class="speed"><button data-rate=".62">🐢 לאט</button><button data-rate=".82" class="active">▶ רגיל</button><button data-rate="1.05">⚡ מהר</button></div>
+              <div class="speed"><button data-rate=".72">🐢 לאט</button><button data-rate=".90" class="active">▶ רגיל</button><button data-rate="1.08">⚡ מהר</button></div>
             </div>
           </details>
 
@@ -368,18 +368,18 @@ textarea:focus{border-color:#7280ff;box-shadow:0 0 0 5px #7280ff15;background:#f
 </main>
 
 <script>
-let original='',rec=null,isListening=false,isSpeaking=false,transcript='',speechRate=.82,englishVoices=[],lessonSource='text',textChooserSource='modes';
+let original='',rec=null,isListening=false,isSpeaking=false,transcript='',speechRate=.90,englishVoices=[],lessonSource='text',textChooserSource='modes';
 let currentLevel=1,currentTheme='animals',kidsIndex=0,stars=0,kidsReading=false,kidsComplete=false;
 const earnedStars=new Set();
 const $=x=>document.getElementById(x);
 
 const kidsData={
   letters:[
-    {main:'A a',word:'Apple',emoji:'🍎',sound:'A says ah. Apple.',phonics:'/æ/',choices:['🍎','🐶','🚀']},
-    {main:'B b',word:'Ball',emoji:'⚽',sound:'B says buh. Ball.',phonics:'/b/',choices:['⚽','🍌','🐱']},
-    {main:'C c',word:'Cat',emoji:'🐱',sound:'C says kuh. Cat.',phonics:'/k/',choices:['🐱','🌞','🚗']},
-    {main:'D d',word:'Dog',emoji:'🐶',sound:'D says duh. Dog.',phonics:'/d/',choices:['🐶','📘','🍎']},
-    {main:'S s',word:'Sun',emoji:'☀️',sound:'S says sss. Sun.',phonics:'/s/',choices:['☀️','🐟','🎮']}
+    {main:'A a',word:'Apple',emoji:'🍎',sound:'A. Apple.',phonics:'/æ/',choices:['🍎','🐶','🚀']},
+    {main:'B b',word:'Ball',emoji:'⚽',sound:'B. Ball.',phonics:'/b/',choices:['⚽','🍌','🐱']},
+    {main:'C c',word:'Cat',emoji:'🐱',sound:'C. Cat.',phonics:'/k/',choices:['🐱','🌞','🚗']},
+    {main:'D d',word:'Dog',emoji:'🐶',sound:'D. Dog.',phonics:'/d/',choices:['🐶','📘','🍎']},
+    {main:'S s',word:'Sun',emoji:'☀️',sound:'S. Sun.',phonics:'/s/',choices:['☀️','🐟','🎮']}
   ],
   animals:{
     words:[['cat','🐱'],['dog','🐶'],['fish','🐟'],['bird','🐦'],['lion','🦁']],
@@ -473,7 +473,7 @@ function checkLetterChoice(btn,answer){
   else{btn.classList.add('wrong');$('kidsFeedback').className='kids-feedback try';$('kidsFeedback').textContent='כמעט. שמע שוב ונסה בפריט הבא.';}
 }
 function awardStar(){const key=currentTheme+':'+currentLevel+':'+kidsIndex;if(earnedStars.has(key))return false;earnedStars.add(key);stars++;$('starCount').textContent=stars;return true}
-$('kidsHear').onclick=()=>{const item=getKidsItems()[kidsIndex];const audio=currentLevel===1?item.sound.replace(/[\\/]/g,''):item.speak;say(audio,.75);};
+$('kidsHear').onclick=()=>{const item=getKidsItems()[kidsIndex];const audio=currentLevel===1?item.sound.replace(/[\\/]/g,''):item.speak;say(audio,.88);};
 function finishKidsLevel(){
   kidsComplete=true;$('choiceGrid').classList.add('hidden');$('kidsHear').classList.add('hidden');$('kidsRead').classList.add('hidden');
   $('kidsEmoji').textContent='🏆';$('kidsMain').textContent='Great job!';$('kidsMain').classList.remove('sentence');$('kidsSub').textContent='סיימת את הרמה';
@@ -516,7 +516,24 @@ function render(badIndexes=[]){
     return idx>=0&&bad.has(idx)?'<span class="bad">'+safe+'</span>':safe;
   }).join('')
 }
-function loadVoices(){const all=speechSynthesis.getVoices();englishVoices=all.filter(v=>/^en[-_]US$/i.test(v.lang));const sel=$('voice');if(!englishVoices.length){sel.innerHTML='<option>US English · ברירת מחדל</option>';return}const rank=v=>/natural|premium|enhanced|google|microsoft|samantha|ava|aria|jenny|guy/i.test(v.name)?0:1;englishVoices.sort((a,b)=>rank(a)-rank(b)||a.name.localeCompare(b.name));sel.innerHTML=englishVoices.map((v,i)=>'<option value="'+i+'">'+v.name.replace(/^Microsoft |^Google /,'')+'</option>').join('')}
+function voiceScore(v){
+  const n=v.name.toLowerCase();let s=100;
+  if(/jenny.*natural|ava.*natural|aria.*natural|guy.*natural/.test(n))s-=60;
+  else if(/natural/.test(n))s-=50;
+  if(/google us english/.test(n))s-=45;
+  if(/samantha/.test(n))s-=40;
+  if(/premium|enhanced/.test(n))s-=35;
+  if(/microsoft/.test(n))s-=12;
+  if(/robot|compact/.test(n))s+=30;
+  return s
+}
+function loadVoices(){
+  const all=speechSynthesis.getVoices();englishVoices=all.filter(v=>/^en[-_]US$/i.test(v.lang));const sel=$('voice');
+  if(!englishVoices.length){sel.innerHTML='<option>US English · ברירת מחדל</option>';return}
+  englishVoices.sort((a,b)=>voiceScore(a)-voiceScore(b)||a.name.localeCompare(b.name));
+  sel.innerHTML=englishVoices.map((v,i)=>'<option value="'+i+'">'+v.name.replace(/^Microsoft |^Google /,'')+'</option>').join('');
+  sel.selectedIndex=0
+}
 loadVoices();speechSynthesis.onvoiceschanged=loadVoices;
 function chosenVoice(){return englishVoices[Number($('voice').value)]||null}
 function stopSpeaking(updateStatus=false){
@@ -534,6 +551,8 @@ function say(text,rate=speechRate,opts={}){
   let u=new SpeechSynthesisUtterance(text),v=chosenVoice();
   if(v){u.voice=v;u.lang='en-US'}else u.lang='en-US';
   u.rate=rate;
+  u.pitch=1.02;
+  u.volume=1;
   u.onstart=()=>{if(opts.main){isSpeaking=true;$('speak').classList.add('speaking');$('speak').textContent='⏹ עצור הקראה'}if(opts.onstart)opts.onstart()};
   u.onend=()=>{if(opts.main){isSpeaking=false;$('speak').classList.remove('speaking');$('speak').textContent='🔊 הקרא לי'}if(opts.onend)opts.onend()};
   u.onerror=()=>{if(opts.main){isSpeaking=false;$('speak').classList.remove('speaking');$('speak').textContent='🔊 הקרא לי'}};
