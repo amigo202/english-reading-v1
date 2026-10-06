@@ -117,6 +117,26 @@ textarea:focus{border-color:#7280ff;box-shadow:0 0 0 5px #7280ff15;background:#f
 @media(max-width:900px){.hero-grid{grid-template-columns:1fr}.logo-lockup{text-align:center}.logo-primary,.logo-secondary{margin-left:auto;margin-right:auto}.logo-tagline{margin-left:0}.hero-features{max-width:720px;margin:0 auto;width:100%}}
 @media(max-width:620px){.hero-grid{gap:14px}.logo-lockup{min-height:145px}.logo-primary{font-size:66px;-webkit-text-stroke:5px #153b8d}.logo-secondary{font-size:58px;-webkit-text-stroke:5px #153b8d}.logo-tagline{font-size:14px;margin-top:13px}.logo-star{font-size:28px}.hero-features{gap:7px}.hero-feature{border-radius:20px;min-height:112px;padding:12px 5px}.hero-icon{width:42px;height:42px;border-radius:13px;font-size:20px}.hero-feature strong{font-size:12px}}
 
+
+/* v3 product polish */
+.hero-grid{max-width:1140px;margin-left:auto;margin-right:auto}
+.logo-primary{font-size:clamp(62px,7.4vw,98px)}
+.logo-secondary{font-size:clamp(54px,6.8vw,90px)}
+.lesson-progress{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 16px}
+.lesson-step{display:flex;align-items:center;gap:9px;background:#f7f9ff;border:1px solid #e9eef9;border-radius:18px;padding:11px 13px;color:#71809c;font-weight:850;font-size:13px}
+.lesson-step .num{width:28px;height:28px;border-radius:10px;display:grid;place-items:center;background:#e9eefb;color:#526583;font-weight:950}
+.lesson-step.active{background:linear-gradient(135deg,#eef2ff,#f8f6ff);color:#3450b7;border-color:#d9e1ff}
+.lesson-step.active .num{background:linear-gradient(135deg,#4b67ff,#674bf1);color:#fff;box-shadow:0 6px 14px rgba(79,97,240,.2)}
+.guide-card{display:flex;align-items:center;gap:11px;background:linear-gradient(135deg,#f5f9ff,#fff8ed);border:1px solid #e9eef8;border-radius:20px;padding:12px;margin-bottom:14px}
+.guide-avatar{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,#d9ecff,#efe6ff);font-size:25px}
+.guide-card strong{display:block;font-size:15px}.guide-card small{display:block;color:#7a89a4;margin-top:3px;line-height:1.3}
+.action-label{display:flex;align-items:center;justify-content:space-between;color:#6b7b99;font-size:12px;font-weight:900;margin:10px 2px 7px}
+.action-label span:last-child{font-weight:800;color:#9aa7bc}
+#speak.speaking{background:linear-gradient(135deg,#1d2535,#333d52);box-shadow:0 10px 24px rgba(31,37,52,.18)}
+.us-chip{display:inline-flex;align-items:center;gap:6px;background:#eef4ff;color:#4462b9;border-radius:999px;padding:6px 9px;font-size:11px;font-weight:900}
+.control-group{position:relative}
+.result-strip{border:1px solid #e6edf8}
+@media(max-width:620px){.lesson-progress{gap:6px}.lesson-step{padding:9px 7px;font-size:11px}.lesson-step .num{width:24px;height:24px;border-radius:8px}.guide-card{padding:10px}}
 </style>
 </head>
 <body>
@@ -168,6 +188,11 @@ textarea:focus{border-color:#7280ff;box-shadow:0 0 0 5px #7280ff15;background:#f
 
   <section id="learn" class="shell hidden">
     <div class="learn-wrap">
+      <div class="lesson-progress">
+        <div class="lesson-step active" id="stepListen"><span class="num">1</span><span>שומעים את הטקסט</span></div>
+        <div class="lesson-step" id="stepRead"><span class="num">2</span><span>קוראים בקול</span></div>
+        <div class="lesson-step" id="stepPractice"><span class="num">3</span><span>מתרגלים ומשתפרים</span></div>
+      </div>
       <div class="lesson-head">
         <div class="lesson-title"><small>הטקסט שלך</small><h2>קוראים באנגלית</h2></div>
         <div class="lesson-pill">1 / 1 · Reading practice</div>
@@ -181,12 +206,17 @@ textarea:focus{border-color:#7280ff;box-shadow:0 0 0 5px #7280ff15;background:#f
         </div>
 
         <aside class="control-card">
-          <div class="control-title">בואו נקרא יחד</div>
+          <div class="guide-card">
+            <div class="guide-avatar">🎧</div>
+            <div><strong>Reading Coach</strong><small>קודם מקשיבים פעם אחת, אחר כך קוראים בקול.</small></div>
+          </div>
+
+          <div class="action-label"><span>שלב 1 · הקשבה</span><span>אפשר לעצור בכל רגע</span></div>
           <button id="speak" class="big-action">🔊 הקרא לי</button>
 
           <div class="control-group">
-            <span class="control-label">🎙️ בחירת קול</span>
-            <div class="voice-row"><select id="voice"><option>טוען קולות...</option></select><button id="voiceTest" type="button">▶</button></div>
+            <span class="control-label">🎙️ קול <span class="us-chip">🇺🇸 US English</span></span>
+            <div class="voice-row"><select id="voice"><option>טוען קולות US...</option></select><button id="voiceTest" type="button">▶</button></div>
           </div>
 
           <div class="control-group">
@@ -194,8 +224,9 @@ textarea:focus{border-color:#7280ff;box-shadow:0 0 0 5px #7280ff15;background:#f
             <div class="speed"><button data-rate=".62">🐢 לאט</button><button data-rate=".82" class="active">▶ רגיל</button><button data-rate="1.05">⚡ מהר</button></div>
           </div>
 
+          <div class="action-label"><span>שלב 2 · עכשיו אתה</span><span>המיקרופון מקשיב</span></div>
           <button id="read" class="big-action">🎤 עכשיו אני קורא</button>
-          <button id="restart" class="secondary">↻ קריאה מחדש</button>
+          <button id="restart" class="secondary">↻ התחל מחדש</button>
         </aside>
       </div>
 
@@ -215,28 +246,49 @@ textarea:focus{border-color:#7280ff;box-shadow:0 0 0 5px #7280ff15;background:#f
 </main>
 
 <script>
-let original='',rec=null,isListening=false,transcript='',speechRate=.82,englishVoices=[];const $=x=>document.getElementById(x);
+let original='',rec=null,isListening=false,isSpeaking=false,transcript='',speechRate=.82,englishVoices=[];const $=x=>document.getElementById(x);
 function words(s){return s.toLowerCase().replace(/[^a-z' ]/g,' ').split(/\s+/).filter(Boolean)}
 $('start').onclick=()=>{original=$('input').value.trim();if(!original)return;$('setup').classList.add('hidden');$('learn').classList.remove('hidden');resetReading();window.scrollTo({top:0,behavior:'smooth'})}
 function render(bad=[]){const set=new Set(bad);$('text').innerHTML=original.split(/(\s+)/).map(x=>{let w=x.toLowerCase().replace(/[^a-z']/g,'');return w&&set.has(w)?'<span class="bad">'+x+'</span>':x}).join('')}
-function loadVoices(){const all=speechSynthesis.getVoices();englishVoices=all.filter(v=>/^en[-_]/i.test(v.lang));const sel=$('voice');if(!englishVoices.length){sel.innerHTML='<option>קול אנגלי ברירת מחדל</option>';return}const rank=v=>/natural|premium|enhanced|google|microsoft|samantha|ava|aria|jenny|guy/i.test(v.name)?0:1;englishVoices.sort((a,b)=>rank(a)-rank(b)||a.name.localeCompare(b.name));sel.innerHTML=englishVoices.map((v,i)=>'<option value="'+i+'">'+v.name+' · '+v.lang+'</option>').join('')}
+function loadVoices(){const all=speechSynthesis.getVoices();englishVoices=all.filter(v=>/^en[-_]US$/i.test(v.lang));const sel=$('voice');if(!englishVoices.length){sel.innerHTML='<option>US English · ברירת מחדל</option>';return}const rank=v=>/natural|premium|enhanced|google|microsoft|samantha|ava|aria|jenny|guy/i.test(v.name)?0:1;englishVoices.sort((a,b)=>rank(a)-rank(b)||a.name.localeCompare(b.name));sel.innerHTML=englishVoices.map((v,i)=>'<option value="'+i+'">'+v.name.replace(/^Microsoft |^Google /,'')+'</option>').join('')}
 loadVoices();speechSynthesis.onvoiceschanged=loadVoices;
 function chosenVoice(){return englishVoices[Number($('voice').value)]||null}
-function say(text,rate=speechRate){speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(text);let v=chosenVoice();if(v){u.voice=v;u.lang=v.lang}else u.lang='en-US';u.rate=rate;speechSynthesis.speak(u)}
+function stopSpeaking(updateStatus=false){
+  speechSynthesis.cancel();
+  isSpeaking=false;
+  $('speak').classList.remove('speaking');
+  $('speak').textContent='🔊 הקרא לי';
+  if(updateStatus)setStatus('⏹ ההקראה נעצרה. אפשר להמשיך להקשיב או לעבור לקריאה.',false);
+}
+function say(text,rate=speechRate,opts={}){
+  speechSynthesis.cancel();
+  let u=new SpeechSynthesisUtterance(text),v=chosenVoice();
+  if(v){u.voice=v;u.lang='en-US'}else u.lang='en-US';
+  u.rate=rate;
+  u.onstart=()=>{if(opts.main){isSpeaking=true;$('speak').classList.add('speaking');$('speak').textContent='⏹ עצור הקראה'}if(opts.onstart)opts.onstart()};
+  u.onend=()=>{if(opts.main){isSpeaking=false;$('speak').classList.remove('speaking');$('speak').textContent='🔊 הקרא לי'}if(opts.onend)opts.onend()};
+  u.onerror=()=>{if(opts.main){isSpeaking=false;$('speak').classList.remove('speaking');$('speak').textContent='🔊 הקרא לי'}};
+  speechSynthesis.speak(u)
+}
 $('voiceTest').onclick=()=>say("Hello! Let's read English together.");
-$('speak').onclick=()=>{say(original,speechRate);setStatus('🔊 מקשיבים לטקסט בקצב '+(speechRate<.7?'איטי':speechRate>1?'מהיר':'רגיל')+'...',false)}
-document.querySelectorAll('.speed button').forEach(b=>b.onclick=()=>{speechRate=Number(b.dataset.rate);document.querySelectorAll('.speed button').forEach(x=>x.classList.remove('active'));b.classList.add('active');if(speechSynthesis.speaking){speechSynthesis.cancel();$('speak').click()}})
+$('speak').onclick=()=>{
+  if(isSpeaking){stopSpeaking(true);return}
+  document.querySelectorAll('.lesson-step').forEach(x=>x.classList.remove('active'));$('stepListen').classList.add('active');
+  say(original,speechRate,{main:true,onend:()=>setStatus('סיימנו להקשיב. עכשיו לחץ על <b>עכשיו אני קורא</b>.',false)});
+  setStatus('🔊 מקשיבים לטקסט בקצב '+(speechRate<.7?'איטי':speechRate>1?'מהיר':'רגיל')+'... אפשר לעצור בכל רגע.',false)
+}
+document.querySelectorAll('.speed button').forEach(b=>b.onclick=()=>{speechRate=Number(b.dataset.rate);document.querySelectorAll('.speed button').forEach(x=>x.classList.remove('active'));b.classList.add('active');if(isSpeaking){stopSpeaking(false);$('speak').click()}})
 function setStatus(html,listening){$('status').innerHTML=html;$('status').classList.toggle('listening',listening)}
-function resetReading(){if(rec&&isListening){try{rec.abort()}catch(e){}}isListening=false;transcript='';render();$('practice').classList.add('hidden');$('resultStrip').classList.add('hidden');$('live').textContent='';$('read').textContent='🎤 עכשיו אני קורא';setStatus('מוכנים לקריאה חדשה. לחץ על המיקרופון והתחל לקרוא.',false)}
+function resetReading(){stopSpeaking(false);if(rec&&isListening){try{rec.abort()}catch(e){}}isListening=false;transcript='';render();$('practice').classList.add('hidden');$('resultStrip').classList.add('hidden');$('live').textContent='';$('read').textContent='🎤 עכשיו אני קורא';setStatus('מוכנים לקריאה חדשה. לחץ על המיקרופון והתחל לקרוא.',false)}
 $('restart').onclick=resetReading;
 $('read').onclick=()=>{if(isListening){rec.stop();return}startRecognition()}
-function startRecognition(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){setStatus('זיהוי דיבור אינו נתמך בדפדפן הזה. מומלץ לפתוח ב-Chrome.',false);return}transcript='';rec=new SR();rec.lang='en-US';rec.continuous=true;rec.interimResults=true;let finalText='';
+function startRecognition(){stopSpeaking(false);document.querySelectorAll('.lesson-step').forEach(x=>x.classList.remove('active'));$('stepRead').classList.add('active');const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){setStatus('זיהוי דיבור אינו נתמך בדפדפן הזה. מומלץ לפתוח ב-Chrome.',false);return}transcript='';rec=new SR();rec.lang='en-US';rec.continuous=true;rec.interimResults=true;let finalText='';
 rec.onstart=()=>{isListening=true;$('read').textContent='⏹ סיים קריאה';setStatus('<span class="pulse"></span><b>מקשיב עכשיו...</b> קרא את הטקסט בקול.',true)}
 rec.onresult=e=>{let interim='';for(let i=e.resultIndex;i<e.results.length;i++){let t=e.results[i][0].transcript.trim();if(e.results[i].isFinal)finalText+=(finalText?' ':'')+t;else interim+=(interim?' ':'')+t}transcript=(finalText+' '+interim).trim();$('live').textContent=transcript?'שומע אותך... '+transcript.split(/\s+/).slice(-10).join(' '):''}
 rec.onerror=e=>{if(e.error==='not-allowed')setStatus('לא התקבלה הרשאה למיקרופון. אשר שימוש במיקרופון בדפדפן ונסה שוב.',false);else if(e.error!=='aborted')setStatus('לא הצלחתי לשמוע. אפשר ללחוץ ולנסות שוב.',false)}
 rec.onend=()=>{let was=isListening;isListening=false;$('read').textContent='🎤 קרא שוב';$('status').classList.remove('listening');if(was&&transcript)analyze(transcript);else if(was)setStatus('לא זיהיתי דיבור. לחץ על "קרא שוב" ונסה שוב.',false)}
 try{rec.start()}catch(e){setStatus('המיקרופון לא התחיל. נסה שוב.',false)}}
-function analyze(spoken){let expected=words(original),said=words(spoken),missing=[];let i=0,j=0;while(i<expected.length&&j<said.length){if(expected[i]===said[j]){i++;j++;continue}let found=-1;for(let k=j+1;k<Math.min(said.length,j+5);k++){if(said[k]===expected[i]){found=k;break}}if(found>=0){j=found;continue}missing.push(expected[i]);i++}while(i<expected.length)missing.push(expected[i++]);missing=[...new Set(missing)];render(missing);setStatus(missing.length?'👏 יפה! יש <b>'+missing.length+'</b> מילים שכדאי לתרגל. אפשר לתרגל ואז ללחוץ <b>קרא שוב</b>.':'🎉 מצוין! קראת את כל המילים שזוהו. אפשר ללחוץ <b>קרא שוב</b> ולנסות פעם נוספת.',false);showPractice(missing);const total=expected.length,practice=missing.length,correct=Math.max(0,total-practice),accuracy=total?Math.round(correct/total*100):0;$('correctCount').textContent=correct;$('practiceCount').textContent=practice;$('accuracyCount').textContent=accuracy+'%';$('resultStrip').classList.remove('hidden')}
+function analyze(spoken){document.querySelectorAll('.lesson-step').forEach(x=>x.classList.remove('active'));$('stepPractice').classList.add('active');let expected=words(original),said=words(spoken),missing=[];let i=0,j=0;while(i<expected.length&&j<said.length){if(expected[i]===said[j]){i++;j++;continue}let found=-1;for(let k=j+1;k<Math.min(said.length,j+5);k++){if(said[k]===expected[i]){found=k;break}}if(found>=0){j=found;continue}missing.push(expected[i]);i++}while(i<expected.length)missing.push(expected[i++]);missing=[...new Set(missing)];render(missing);setStatus(missing.length?'👏 יפה! יש <b>'+missing.length+'</b> מילים שכדאי לתרגל. אפשר לתרגל ואז ללחוץ <b>קרא שוב</b>.':'🎉 מצוין! קראת את כל המילים שזוהו. אפשר ללחוץ <b>קרא שוב</b> ולנסות פעם נוספת.',false);showPractice(missing);const total=expected.length,practice=missing.length,correct=Math.max(0,total-practice),accuracy=total?Math.round(correct/total*100):0;$('correctCount').textContent=correct;$('practiceCount').textContent=practice;$('accuracyCount').textContent=accuracy+'%';$('resultStrip').classList.remove('hidden')}
 function showPractice(list){if(!list.length){$('practice').classList.add('hidden');return}$('practice').classList.remove('hidden');$('words').innerHTML=list.map(w=>'<button data-word="'+w+'">'+w+' 🔊</button>').join('');$('words').querySelectorAll('button').forEach(b=>b.onclick=()=>practiceWord(b.dataset.word))}
 function practiceWord(w){say(w,.7)}
 </script>
