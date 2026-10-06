@@ -449,7 +449,7 @@ function renderKidsItem(){
   $('kidsEmoji').textContent=item.emoji||'';
   $('kidsMain').textContent=item.main;
   $('kidsMain').classList.toggle('sentence',currentLevel>=4);
-  $('kidsSub').textContent=currentLevel===1?((item.phonics||'')+'  ·  '+item.word):(item.sub||item.word||'');
+  $('kidsSub').textContent=currentLevel===1?item.word:(item.sub||item.word||'');
   $('kidsFeedback').className='kids-feedback';
   $('kidsFeedback').textContent=currentLevel===1?'לחצו על 🔊 ואז בחרו את התמונה הנכונה.':currentLevel===5?'לחצו על “פתח סיפור” כדי לעבור לקריאה מלאה.':'לחצו על 🔊 כדי לשמוע ואז נסו לקרוא.';
   $('kidsHear').textContent=currentLevel===5?'🔊 שמע סיפור':'🔊 שמע';
@@ -473,7 +473,7 @@ function checkLetterChoice(btn,answer){
   else{btn.classList.add('wrong');$('kidsFeedback').className='kids-feedback try';$('kidsFeedback').textContent='כמעט. שמע שוב ונסה בפריט הבא.';}
 }
 function awardStar(){const key=currentTheme+':'+currentLevel+':'+kidsIndex;if(earnedStars.has(key))return false;earnedStars.add(key);stars++;$('starCount').textContent=stars;return true}
-$('kidsHear').onclick=()=>{const item=getKidsItems()[kidsIndex];say(currentLevel===1?item.sound:item.speak,.75);};
+$('kidsHear').onclick=()=>{const item=getKidsItems()[kidsIndex];const audio=currentLevel===1?item.sound.replace(/[\\/]/g,''):item.speak;say(audio,.75);};
 function finishKidsLevel(){
   kidsComplete=true;$('choiceGrid').classList.add('hidden');$('kidsHear').classList.add('hidden');$('kidsRead').classList.add('hidden');
   $('kidsEmoji').textContent='🏆';$('kidsMain').textContent='Great job!';$('kidsMain').classList.remove('sentence');$('kidsSub').textContent='סיימת את הרמה';
