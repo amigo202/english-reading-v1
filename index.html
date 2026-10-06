@@ -174,6 +174,11 @@ textarea:focus{border-color:#7280ff;box-shadow:0 0 0 5px #7280ff15;background:#f
 .lesson-back{border:0;background:#eef3ff;color:#405cc4;border-radius:14px;padding:10px 14px;font-weight:900}
 .lesson-back:hover{background:#e4ebff}
 @media(max-width:620px){.lesson-head-actions{width:100%;justify-content:space-between}.lesson-back{padding:9px 12px}}
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.tts-settings{margin:10px 0 13px;border:1px solid #edf1fa;border-radius:18px;background:#f8faff;overflow:hidden}
+.tts-settings summary{cursor:pointer;list-style:none;padding:12px 14px;font-weight:900;color:#536584;font-size:13px;display:flex;align-items:center;justify-content:space-between}
+.tts-settings summary::-webkit-details-marker{display:none}.tts-settings summary:after{content:'⌄';font-size:18px;color:#8694ae}.tts-settings[open] summary:after{content:'⌃'}
+.tts-settings .control-group{margin:0;border:0;border-top:1px solid #edf1fa;border-radius:0;background:transparent}
 </style>
 </head>
 <body>
@@ -234,6 +239,7 @@ textarea:focus{border-color:#7280ff;box-shadow:0 0 0 5px #7280ff15;background:#f
       <div id="textChooser" class="subscreen hidden">
         <div class="subscreen-head"><h3>הדביקו טקסט באנגלית</h3><button class="back-mini" id="backModes2">← חזרה</button></div>
         <div class="text-mode-box">
+          <label class="sr-only" for="input">טקסט באנגלית לתרגול</label>
           <textarea id="input">Last Saturday, Tom went to the beach with his family. They played in the sand and swam in the sea. Tom found a beautiful shell and showed it to his sister.</textarea>
           <div class="setup-actions"><button id="start" class="primary">מתחילים לקרוא ←</button></div>
         </div>
@@ -316,15 +322,17 @@ textarea:focus{border-color:#7280ff;box-shadow:0 0 0 5px #7280ff15;background:#f
           <div class="action-label"><span>שלב 1 · הקשבה</span><span>אפשר לעצור בכל רגע</span></div>
           <button id="speak" class="big-action">🔊 הקרא לי</button>
 
-          <div class="control-group">
-            <span class="control-label">🎙️ קול <span class="us-chip">🇺🇸 US English</span></span>
-            <div class="voice-row"><select id="voice"><option>טוען קולות US...</option></select><button id="voiceTest" type="button">▶</button></div>
-          </div>
-
-          <div class="control-group">
-            <span class="control-label">⏱️ קצב הקראה</span>
-            <div class="speed"><button data-rate=".62">🐢 לאט</button><button data-rate=".82" class="active">▶ רגיל</button><button data-rate="1.05">⚡ מהר</button></div>
-          </div>
+          <details class="tts-settings">
+            <summary>⚙️ הגדרות הקראה <span class="us-chip">🇺🇸 US</span></summary>
+            <div class="control-group">
+              <label class="control-label" for="voice">🎙️ קול — US English</label>
+              <div class="voice-row"><select id="voice"><option>טוען קולות US...</option></select><button id="voiceTest" type="button" aria-label="בדיקת קול">▶</button></div>
+            </div>
+            <div class="control-group">
+              <span class="control-label">⏱️ קצב הקראה</span>
+              <div class="speed"><button data-rate=".62">🐢 לאט</button><button data-rate=".82" class="active">▶ רגיל</button><button data-rate="1.05">⚡ מהר</button></div>
+            </div>
+          </details>
 
           <div class="action-label"><span>שלב 2 · עכשיו אתה</span><span>המיקרופון מקשיב</span></div>
           <button id="read" class="big-action">🎤 עכשיו אני קורא</button>
@@ -336,7 +344,7 @@ textarea:focus{border-color:#7280ff;box-shadow:0 0 0 5px #7280ff15;background:#f
         <div class="result-main"><div class="trophy">🏆</div><div><strong>כל הכבוד!</strong><small>סיימת קריאה וקיבלת משוב.</small></div></div>
         <div class="stat green"><b id="correctCount">0</b><small>מילים נכונות</small></div>
         <div class="stat red"><b id="practiceCount">0</b><small>לתרגול</small></div>
-        <div class="stat blue"><b id="accuracyCount">0%</b><small>דיוק</small></div>
+        <div class="stat blue"><b id="accuracyCount">0%</b><small>התאמה לטקסט</small></div>
       </div>
 
       <div class="lower">
@@ -475,7 +483,16 @@ function alignSimple(a,b){
   return aw.length?hits/aw.length:0;
 }
 
-function render(bad=[]){const set=new Set(bad);$('text').innerHTML=original.split(/(\s+)/).map(x=>{let w=x.toLowerCase().replace(/[^a-z']/g,'');return w&&set.has(w)?'<span class="bad">'+x+'</span>':x}).join('')}
+function esc(s){return String(s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]))}
+function render(badIndexes=[]){
+  const bad=new Set(badIndexes),parts=original.split(/(\s+)/);let wi=0;
+  $('text').innerHTML=parts.map(x=>{
+    if(/^\s+$/.test(x))return x;
+    const cleaned=x.toLowerCase().replace(/[^a-z']/g,'');
+    const idx=cleaned?wi++:-1,safe=esc(x);
+    return idx>=0&&bad.has(idx)?'<span class="bad">'+safe+'</span>':safe;
+  }).join('')
+}
 function loadVoices(){const all=speechSynthesis.getVoices();englishVoices=all.filter(v=>/^en[-_]US$/i.test(v.lang));const sel=$('voice');if(!englishVoices.length){sel.innerHTML='<option>US English · ברירת מחדל</option>';return}const rank=v=>/natural|premium|enhanced|google|microsoft|samantha|ava|aria|jenny|guy/i.test(v.name)?0:1;englishVoices.sort((a,b)=>rank(a)-rank(b)||a.name.localeCompare(b.name));sel.innerHTML=englishVoices.map((v,i)=>'<option value="'+i+'">'+v.name.replace(/^Microsoft |^Google /,'')+'</option>').join('')}
 loadVoices();speechSynthesis.onvoiceschanged=loadVoices;
 function chosenVoice(){return englishVoices[Number($('voice').value)]||null}
@@ -487,7 +504,10 @@ function stopSpeaking(updateStatus=false){
   if(updateStatus)setStatus('⏹ ההקראה נעצרה. אפשר להמשיך להקשיב או לעבור לקריאה.',false);
 }
 function say(text,rate=speechRate,opts={}){
-  speechSynthesis.cancel();
+  if(isSpeaking&&!opts.main){
+    speechSynthesis.cancel();isSpeaking=false;
+    $('speak').classList.remove('speaking');$('speak').textContent='🔊 הקרא לי';
+  }else speechSynthesis.cancel();
   let u=new SpeechSynthesisUtterance(text),v=chosenVoice();
   if(v){u.voice=v;u.lang='en-US'}else u.lang='en-US';
   u.rate=rate;
@@ -517,13 +537,26 @@ function setStatus(html,listening){$('status').innerHTML=html;$('status').classL
 function resetReading(){stopSpeaking(false);if(rec&&isListening){try{rec.abort()}catch(e){}}isListening=false;transcript='';render();$('practice').classList.add('hidden');$('resultStrip').classList.add('hidden');$('live').textContent='';$('read').textContent='🎤 עכשיו אני קורא';setStatus('מוכנים לקריאה חדשה. לחץ על המיקרופון והתחל לקרוא.',false)}
 $('restart').onclick=resetReading;
 $('read').onclick=()=>{if(isListening){rec.stop();return}startRecognition()}
-function startRecognition(){stopSpeaking(false);document.querySelectorAll('.lesson-step').forEach(x=>x.classList.remove('active'));$('stepRead').classList.add('active');const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){setStatus('זיהוי דיבור אינו נתמך בדפדפן הזה. מומלץ לפתוח ב-Chrome.',false);return}transcript='';rec=new SR();rec.lang='en-US';rec.continuous=true;rec.interimResults=true;let finalText='';
+function startRecognition(){stopSpeaking(false);document.querySelectorAll('.lesson-step').forEach(x=>x.classList.remove('active'));$('stepRead').classList.add('active');const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){setStatus('זיהוי דיבור אינו נתמך בדפדפן הזה. מומלץ לפתוח ב-Chrome.',false);return}transcript='';rec=new SR();rec.lang='en-US';rec.continuous=true;rec.interimResults=true;let finalText='',recHadError=false;
 rec.onstart=()=>{isListening=true;$('read').textContent='⏹ סיים קריאה';setStatus('<span class="pulse"></span><b>מקשיב עכשיו...</b> קרא את הטקסט בקול.',true)}
 rec.onresult=e=>{let interim='';for(let i=e.resultIndex;i<e.results.length;i++){let t=e.results[i][0].transcript.trim();if(e.results[i].isFinal)finalText+=(finalText?' ':'')+t;else interim+=(interim?' ':'')+t}transcript=(finalText+' '+interim).trim();$('live').textContent=transcript?'שומע אותך... '+transcript.split(/\s+/).slice(-10).join(' '):''}
-rec.onerror=e=>{if(e.error==='not-allowed')setStatus('לא התקבלה הרשאה למיקרופון. אשר שימוש במיקרופון בדפדפן ונסה שוב.',false);else if(e.error!=='aborted')setStatus('לא הצלחתי לשמוע. אפשר ללחוץ ולנסות שוב.',false)}
-rec.onend=()=>{let was=isListening;isListening=false;$('read').textContent='🎤 קרא שוב';$('status').classList.remove('listening');if(was&&transcript)analyze(transcript);else if(was)setStatus('לא זיהיתי דיבור. לחץ על "קרא שוב" ונסה שוב.',false)}
+rec.onerror=e=>{recHadError=e.error!=='aborted';if(e.error==='not-allowed')setStatus('לא התקבלה הרשאה למיקרופון. אשר שימוש במיקרופון בדפדפן ונסה שוב.',false);else if(e.error!=='aborted')setStatus('לא הצלחתי לשמוע. אפשר ללחוץ ולנסות שוב.',false)}
+rec.onend=()=>{let was=isListening;isListening=false;$('read').textContent='🎤 קרא שוב';$('status').classList.remove('listening');if(recHadError)return;if(was&&transcript)analyze(transcript);else if(was)setStatus('לא זיהיתי דיבור. לחץ על "קרא שוב" ונסה שוב.',false)}
 try{rec.start()}catch(e){setStatus('המיקרופון לא התחיל. נסה שוב.',false)}}
-function analyze(spoken){document.querySelectorAll('.lesson-step').forEach(x=>x.classList.remove('active'));$('stepPractice').classList.add('active');let expected=words(original),said=words(spoken),missing=[];let i=0,j=0;while(i<expected.length&&j<said.length){if(expected[i]===said[j]){i++;j++;continue}let found=-1;for(let k=j+1;k<Math.min(said.length,j+5);k++){if(said[k]===expected[i]){found=k;break}}if(found>=0){j=found;continue}missing.push(expected[i]);i++}while(i<expected.length)missing.push(expected[i++]);missing=[...new Set(missing)];render(missing);setStatus(missing.length?'👏 יפה! יש <b>'+missing.length+'</b> מילים שכדאי לתרגל. אפשר לתרגל ואז ללחוץ <b>קרא שוב</b>.':'🎉 מצוין! קראת את כל המילים שזוהו. אפשר ללחוץ <b>קרא שוב</b> ולנסות פעם נוספת.',false);showPractice(missing);const total=expected.length,practice=missing.length,correct=Math.max(0,total-practice),accuracy=total?Math.round(correct/total*100):0;$('correctCount').textContent=correct;$('practiceCount').textContent=practice;$('accuracyCount').textContent=accuracy+'%';$('resultStrip').classList.remove('hidden')}
+function analyze(spoken){
+  document.querySelectorAll('.lesson-step').forEach(x=>x.classList.remove('active'));$('stepPractice').classList.add('active');
+  const expected=words(original),said=words(spoken),m=expected.length,n=said.length;
+  const dp=Array.from({length:m+1},()=>Array(n+1).fill(0));
+  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)dp[i][j]=expected[i-1]===said[j-1]?dp[i-1][j-1]+1:Math.max(dp[i-1][j],dp[i][j-1]);
+  const good=Array(m).fill(false);let i=m,j=n;
+  while(i&&j){if(expected[i-1]===said[j-1]){good[i-1]=true;i--;j--}else if(dp[i-1][j]>=dp[i][j-1])i--;else j--}
+  const missingIndexes=good.map((v,idx)=>v?-1:idx).filter(idx=>idx>=0);
+  render(missingIndexes);
+  const practice=missingIndexes.length,correct=m-practice,match=m?Math.round(correct/m*100):0;
+  setStatus(practice?'👏 יפה! יש <b>'+practice+'</b> מופעים שכדאי לתרגל. זהו משוב על <b>התאמה לטקסט</b>, לא ציון הגייה.':'🎉 מצוין! כל המילים זוהו בהתאמה לטקסט. זה אינו ציון הגייה.',false);
+  showPractice([...new Set(missingIndexes.map(idx=>expected[idx]))]);
+  $('correctCount').textContent=correct;$('practiceCount').textContent=practice;$('accuracyCount').textContent=match+'%';$('resultStrip').classList.remove('hidden')
+}
 function showPractice(list){if(!list.length){$('practice').classList.add('hidden');return}$('practice').classList.remove('hidden');$('words').innerHTML=list.map(w=>'<button data-word="'+w+'">'+w+' 🔊</button>').join('');$('words').querySelectorAll('button').forEach(b=>b.onclick=()=>practiceWord(b.dataset.word))}
 function practiceWord(w){say(w,.7)}
 </script>
