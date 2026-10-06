@@ -169,6 +169,11 @@ textarea:focus{border-color:#7280ff;box-shadow:0 0 0 5px #7280ff15;background:#f
 @media(max-width:800px){.mode-grid{grid-template-columns:1fr}.level-grid{grid-template-columns:1fr 1fr}.home-main{padding:24px}.kids-card{padding:18px}.choice-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:520px){.level-grid{grid-template-columns:1fr}.kids-stage{min-height:250px}.kids-emoji{font-size:68px}.kids-actions button{flex:1}.choice{font-size:30px}}
 
+
+.lesson-head-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.lesson-back{border:0;background:#eef3ff;color:#405cc4;border-radius:14px;padding:10px 14px;font-weight:900}
+.lesson-back:hover{background:#e4ebff}
+@media(max-width:620px){.lesson-head-actions{width:100%;justify-content:space-between}.lesson-back{padding:9px 12px}}
 </style>
 </head>
 <body>
@@ -289,7 +294,10 @@ textarea:focus{border-color:#7280ff;box-shadow:0 0 0 5px #7280ff15;background:#f
       </div>
       <div class="lesson-head">
         <div class="lesson-title"><small>הטקסט שלך</small><h2>קוראים באנגלית</h2></div>
-        <div class="lesson-pill">1 / 1 · Reading practice</div>
+        <div class="lesson-head-actions">
+          <button id="lessonBack" class="lesson-back">← חזרה</button>
+          <div class="lesson-pill">1 / 1 · Reading practice</div>
+        </div>
       </div>
 
       <div class="lesson-grid">
@@ -340,7 +348,7 @@ textarea:focus{border-color:#7280ff;box-shadow:0 0 0 5px #7280ff15;background:#f
 </main>
 
 <script>
-let original='',rec=null,isListening=false,isSpeaking=false,transcript='',speechRate=.82,englishVoices=[];
+let original='',rec=null,isListening=false,isSpeaking=false,transcript='',speechRate=.82,englishVoices=[],lessonSource='text';
 let currentLevel=1,currentTheme='animals',kidsIndex=0,stars=0,kidsReading=false;
 const $=x=>document.getElementById(x);
 
@@ -378,12 +386,13 @@ const kidsData={
   }
 };
 function words(s){return s.toLowerCase().replace(/[^a-z' ]/g,' ').split(/\s+/).filter(Boolean)}
-function openTextLesson(textValue){
+function openTextLesson(textValue,source='text'){
   original=(textValue||'').trim();if(!original)return;
+  lessonSource=source;
   $('setup').classList.add('hidden');$('kids').classList.add('hidden');$('learn').classList.remove('hidden');
   resetReading();window.scrollTo({top:0,behavior:'smooth'});
 }
-$('start').onclick=()=>openTextLesson($('input').value);
+$('start').onclick=()=>openTextLesson($('input').value,'text');
 function showMode(which){
   $('modeChooser').classList.toggle('hidden',which!=='modes');
   $('kidsChooser').classList.toggle('hidden',which!=='kids');
@@ -441,7 +450,7 @@ function checkLetterChoice(btn,answer){
 }
 function awardStar(){stars++;$('starCount').textContent=stars}
 $('kidsHear').onclick=()=>{const item=getKidsItems()[kidsIndex];say(currentLevel===1?item.sound:item.speak,.75);};
-$('kidsNext').onclick=()=>{const items=getKidsItems();if(currentLevel===5){openTextLesson(items[0].speak);return}kidsIndex=(kidsIndex+1)%items.length;renderKidsItem();};
+$('kidsNext').onclick=()=>{const items=getKidsItems();if(currentLevel===5){openTextLesson(items[0].speak,'kids');return}kidsIndex=(kidsIndex+1)%items.length;renderKidsItem();};
 $('kidsRead').onclick=()=>practiceKidsSpeech();
 
 function practiceKidsSpeech(){
@@ -487,6 +496,15 @@ function say(text,rate=speechRate,opts={}){
   u.onerror=()=>{if(opts.main){isSpeaking=false;$('speak').classList.remove('speaking');$('speak').textContent='🔊 הקרא לי'}};
   speechSynthesis.speak(u)
 }
+$('lessonBack').onclick=()=>{
+  stopSpeaking(false);
+  if(rec&&isListening){try{rec.abort()}catch(e){}}
+  isListening=false;
+  $('learn').classList.add('hidden');
+  $('setup').classList.remove('hidden');
+  if(lessonSource==='kids') showMode('kids'); else showMode('text');
+  window.scrollTo({top:0,behavior:'smooth'});
+};
 $('voiceTest').onclick=()=>say("Hello! Let's read English together.");
 $('speak').onclick=()=>{
   if(isSpeaking){stopSpeaking(true);return}
