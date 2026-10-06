@@ -179,6 +179,12 @@ textarea:focus{border-color:#7280ff;box-shadow:0 0 0 5px #7280ff15;background:#f
 .tts-settings summary{cursor:pointer;list-style:none;padding:12px 14px;font-weight:900;color:#536584;font-size:13px;display:flex;align-items:center;justify-content:space-between}
 .tts-settings summary::-webkit-details-marker{display:none}.tts-settings summary:after{content:'⌄';font-size:18px;color:#8694ae}.tts-settings[open] summary:after{content:'⌃'}
 .tts-settings .control-group{margin:0;border:0;border-top:1px solid #edf1fa;border-radius:0;background:transparent}
+.comprehension-quiz{margin-top:14px;display:grid;gap:12px}
+.comp-q{background:#f8faff;border:1px solid #e8eef9;border-radius:18px;padding:14px}.comp-q strong{display:block;margin-bottom:9px;color:#173d8f}
+.comp-options{display:flex;gap:8px;flex-wrap:wrap}.comp-option{border:1px solid #dfe6f5;background:#fff;color:#39517c;border-radius:13px;padding:9px 12px;font-weight:850}.comp-option.good{background:#ebfbf2;border-color:#8bdfb4;color:#0e7d54}.comp-option.bad-answer{background:#fff0f3;border-color:#ffb8c5;color:#b93450}
+.comp-score{background:#fff8df;color:#946300;border-radius:15px;padding:11px 13px;font-weight:900;text-align:center}
+.kids-finish{animation:popin .25s ease}@keyframes popin{from{transform:scale(.96);opacity:.5}to{transform:scale(1);opacity:1}}
+@media(max-width:620px){.comp-options{display:grid;grid-template-columns:1fr}.comp-option{width:100%}}
 </style>
 </head>
 <body>
@@ -349,24 +355,31 @@ textarea:focus{border-color:#7280ff;box-shadow:0 0 0 5px #7280ff15;background:#f
 
       <div class="lower">
         <div id="practice" class="practice-card hidden wordbox"><h3>מילים שכדאי לתרגל</h3><div id="words"></div></div>
-        <div class="understand-card"><h3>🧠 הבנתי את הטקסט</h3><p>אחרי הקריאה נסה לענות לעצמך: מי מופיע בטקסט? מה קרה? ומה הפרט החשוב ביותר?</p><button class="newtext" onclick="location.reload()">📄 טקסט חדש</button></div>
+        <div class="understand-card">
+          <h3>🧠 הבנתי את הטקסט</h3>
+          <p>אחרי הקריאה נפתחות 3 שאלות קצרות מתוך הטקסט עצמו.</p>
+          <button id="buildQuiz" class="newtext">פתח שאלות הבנה</button>
+          <div id="comprehensionQuiz" class="comprehension-quiz hidden"></div>
+          <button id="newTextBtn" class="newtext" style="margin-top:12px">📄 טקסט חדש</button>
+        </div>
       </div>
     </div>
   </section>
 </main>
 
 <script>
-let original='',rec=null,isListening=false,isSpeaking=false,transcript='',speechRate=.82,englishVoices=[],lessonSource='text';
-let currentLevel=1,currentTheme='animals',kidsIndex=0,stars=0,kidsReading=false;
+let original='',rec=null,isListening=false,isSpeaking=false,transcript='',speechRate=.82,englishVoices=[],lessonSource='text',textChooserSource='modes';
+let currentLevel=1,currentTheme='animals',kidsIndex=0,stars=0,kidsReading=false,kidsComplete=false;
+const earnedStars=new Set();
 const $=x=>document.getElementById(x);
 
 const kidsData={
   letters:[
-    {main:'A a',word:'Apple',emoji:'🍎',sound:'A. Apple.',choices:['🍎','🐶','🚀']},
-    {main:'B b',word:'Ball',emoji:'⚽',sound:'B. Ball.',choices:['⚽','🍌','🐱']},
-    {main:'C c',word:'Cat',emoji:'🐱',sound:'C. Cat.',choices:['🐱','🌞','🚗']},
-    {main:'D d',word:'Dog',emoji:'🐶',sound:'D. Dog.',choices:['🐶','📘','🍎']},
-    {main:'S s',word:'Sun',emoji:'☀️',sound:'S. Sun.',choices:['☀️','🐟','🎮']}
+    {main:'A a',word:'Apple',emoji:'🍎',sound:'A says ah. Apple.',phonics:'/æ/',choices:['🍎','🐶','🚀']},
+    {main:'B b',word:'Ball',emoji:'⚽',sound:'B says buh. Ball.',phonics:'/b/',choices:['⚽','🍌','🐱']},
+    {main:'C c',word:'Cat',emoji:'🐱',sound:'C says kuh. Cat.',phonics:'/k/',choices:['🐱','🌞','🚗']},
+    {main:'D d',word:'Dog',emoji:'🐶',sound:'D says duh. Dog.',phonics:'/d/',choices:['🐶','📘','🍎']},
+    {main:'S s',word:'Sun',emoji:'☀️',sound:'S says sss. Sun.',phonics:'/s/',choices:['☀️','🐟','🎮']}
   ],
   animals:{
     words:[['cat','🐱'],['dog','🐶'],['fish','🐟'],['bird','🐦'],['lion','🦁']],
@@ -398,20 +411,20 @@ function openTextLesson(textValue,source='text'){
   original=(textValue||'').trim();if(!original)return;
   lessonSource=source;
   $('setup').classList.add('hidden');$('kids').classList.add('hidden');$('learn').classList.remove('hidden');
-  resetReading();window.scrollTo({top:0,behavior:'smooth'});
+  if($('comprehensionQuiz')){$('comprehensionQuiz').classList.add('hidden');$('comprehensionQuiz').innerHTML=''}resetReading();window.scrollTo({top:0,behavior:'smooth'});
 }
-$('start').onclick=()=>openTextLesson($('input').value,'text');
+$('start').onclick=()=>openTextLesson($('input').value,textChooserSource==='kids'?'kids':'text');
 function showMode(which){
   $('modeChooser').classList.toggle('hidden',which!=='modes');
   $('kidsChooser').classList.toggle('hidden',which!=='kids');
   $('textChooser').classList.toggle('hidden',which!=='text');
 }
 $('kidsModeBtn').onclick=()=>showMode('kids');
-$('textModeBtn').onclick=()=>showMode('text');
+$('textModeBtn').onclick=()=>{textChooserSource='modes';showMode('text')};
 $('backModes1').onclick=()=>showMode('modes');
-$('backModes2').onclick=()=>showMode('modes');
+$('backModes2').onclick=()=>showMode(textChooserSource==='kids'?'kids':'modes');
 document.querySelectorAll('.theme-btn').forEach(b=>b.onclick=()=>{currentTheme=b.dataset.theme;document.querySelectorAll('.theme-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active')});
-document.querySelectorAll('.level-card').forEach(b=>b.onclick=()=>{let level=Number(b.dataset.level);if(level===6){showMode('text');return}startKidsLevel(level)});
+document.querySelectorAll('.level-card').forEach(b=>b.onclick=()=>{let level=Number(b.dataset.level);if(level===6){textChooserSource='kids';showMode('text');return}startKidsLevel(level)});
 $('kidsBack').onclick=()=>{stopSpeaking(false);$('kids').classList.add('hidden');$('setup').classList.remove('hidden');showMode('kids');window.scrollTo({top:0,behavior:'smooth'})};
 
 function getKidsItems(){
@@ -423,7 +436,7 @@ function getKidsItems(){
   return [{word:t.story,emoji:'📘',main:'Short Story',sub:t.story,speak:t.story}];
 }
 function startKidsLevel(level){
-  currentLevel=level;kidsIndex=0;kidsReading=false;
+  currentLevel=level;kidsIndex=0;kidsReading=false;kidsComplete=false;
   $('setup').classList.add('hidden');$('learn').classList.add('hidden');$('kids').classList.remove('hidden');
   renderKidsItem();window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -436,13 +449,16 @@ function renderKidsItem(){
   $('kidsEmoji').textContent=item.emoji||'';
   $('kidsMain').textContent=item.main;
   $('kidsMain').classList.toggle('sentence',currentLevel>=4);
-  $('kidsSub').textContent=item.sub||item.word||'';
+  $('kidsSub').textContent=currentLevel===1?((item.phonics||'')+'  ·  '+item.word):(item.sub||item.word||'');
   $('kidsFeedback').className='kids-feedback';
   $('kidsFeedback').textContent=currentLevel===1?'לחצו על 🔊 ואז בחרו את התמונה הנכונה.':currentLevel===5?'לחצו על “פתח סיפור” כדי לעבור לקריאה מלאה.':'לחצו על 🔊 כדי לשמוע ואז נסו לקרוא.';
   $('kidsHear').textContent=currentLevel===5?'🔊 שמע סיפור':'🔊 שמע';
   $('kidsRead').classList.toggle('hidden',currentLevel===1||currentLevel===5);
   $('kidsRead').textContent='🎤 אני קורא';
   $('kidsNext').textContent=currentLevel===5?'📖 פתח סיפור':'הבא ➜';
+  kidsComplete=false;
+  $('kidsHear').classList.remove('hidden');
+  if(currentLevel!==1&&currentLevel!==5)$('kidsRead').classList.remove('hidden');
   if(currentLevel===1){
     $('choiceGrid').classList.remove('hidden');
     const choices=[...item.choices].sort(()=>Math.random()-.5);
@@ -456,9 +472,16 @@ function checkLetterChoice(btn,answer){
   if(btn.dataset.choice===answer){btn.classList.add('correct');awardStar();$('kidsFeedback').className='kids-feedback good';$('kidsFeedback').textContent='מעולה! ⭐';}
   else{btn.classList.add('wrong');$('kidsFeedback').className='kids-feedback try';$('kidsFeedback').textContent='כמעט. שמע שוב ונסה בפריט הבא.';}
 }
-function awardStar(){stars++;$('starCount').textContent=stars}
+function awardStar(){const key=currentTheme+':'+currentLevel+':'+kidsIndex;if(earnedStars.has(key))return false;earnedStars.add(key);stars++;$('starCount').textContent=stars;return true}
 $('kidsHear').onclick=()=>{const item=getKidsItems()[kidsIndex];say(currentLevel===1?item.sound:item.speak,.75);};
-$('kidsNext').onclick=()=>{const items=getKidsItems();if(currentLevel===5){openTextLesson(items[0].speak,'kids');return}kidsIndex=(kidsIndex+1)%items.length;renderKidsItem();};
+function finishKidsLevel(){
+  kidsComplete=true;$('choiceGrid').classList.add('hidden');$('kidsHear').classList.add('hidden');$('kidsRead').classList.add('hidden');
+  $('kidsEmoji').textContent='🏆';$('kidsMain').textContent='Great job!';$('kidsMain').classList.remove('sentence');$('kidsSub').textContent='סיימת את הרמה';
+  $('kidsFeedback').className='kids-feedback good kids-finish';$('kidsFeedback').textContent='כל הכבוד! אפשר לעבור לרמה הבאה.';
+  $('kidsNext').textContent=currentLevel<5?'לרמה הבאה ➜':'בחירת רמה';
+  $('progressDots').innerHTML=getKidsItems().map(()=>'<span class="dot-progress done"></span>').join('');
+}
+$('kidsNext').onclick=()=>{const items=getKidsItems();if(kidsComplete){if(currentLevel<5)startKidsLevel(currentLevel+1);else{$('kids').classList.add('hidden');$('setup').classList.remove('hidden');showMode('kids')}return}if(currentLevel===5){openTextLesson(items[0].speak,'kids');return}if(kidsIndex>=items.length-1){finishKidsLevel();return}kidsIndex++;renderKidsItem();};
 $('kidsRead').onclick=()=>practiceKidsSpeech();
 
 function practiceKidsSpeech(){
@@ -559,5 +582,31 @@ function analyze(spoken){
 }
 function showPractice(list){if(!list.length){$('practice').classList.add('hidden');return}$('practice').classList.remove('hidden');$('words').innerHTML=list.map(w=>'<button data-word="'+w+'">'+w+' 🔊</button>').join('');$('words').querySelectorAll('button').forEach(b=>b.onclick=()=>practiceWord(b.dataset.word))}
 function practiceWord(w){say(w,.7)}
+const stopWords=new Set(['the','and','with','that','this','from','they','them','have','has','had','was','were','are','is','for','his','her','their','into','about','after','before','very','then','when','where','what','who','why','how']);
+function buildComprehensionQuiz(){
+  const quiz=$('comprehensionQuiz'),sentences=original.split(/[.!?]+/).map(s=>s.trim()).filter(s=>s.split(/\s+/).length>=3);
+  const content=words(original).filter(w=>w.length>3&&!stopWords.has(w));
+  if(!sentences.length||content.length<2){quiz.classList.remove('hidden');quiz.innerHTML='<div class="comp-score">הטקסט קצר מדי ליצירת שאלות אוטומטיות.</div>';return}
+  const unique=[...new Set(content)],qs=[],count=Math.min(3,sentences.length);
+  for(let q=0;q<count;q++){
+    const sentence=sentences[q%sentences.length],sw=words(sentence).filter(w=>w.length>3&&!stopWords.has(w));
+    const answer=sw[Math.floor(sw.length/2)]||unique[q%unique.length];
+    const prompt=esc(sentence.replace(new RegExp('\\b'+answer+'\\b','i'),'_____'));
+    let distract=unique.filter(w=>w!==answer).slice(0,2);
+    while(distract.length<2)distract.push(['school','happy','today'][distract.length]);
+    const opts=[answer,...distract].sort(()=>Math.random()-.5);
+    qs.push('<div class="comp-q" data-answer="'+esc(answer)+'"><strong>'+(q+1)+'. איזו מילה משלימה נכון את המשפט?</strong><div dir="ltr" style="margin-bottom:10px;color:#354f82">'+prompt+'</div><div class="comp-options">'+opts.map(o=>'<button class="comp-option" data-option="'+esc(o)+'">'+esc(o)+'</button>').join('')+'</div></div>');
+  }
+  quiz.innerHTML=qs.join('')+'<div id="compScore" class="comp-score">ענו על השאלות</div>';quiz.classList.remove('hidden');
+  let answered=0,score=0;
+  quiz.querySelectorAll('.comp-q').forEach(box=>box.querySelectorAll('.comp-option').forEach(btn=>btn.onclick=()=>{
+    if(box.dataset.done)return;box.dataset.done='1';answered++;
+    const good=btn.dataset.option===box.dataset.answer;btn.classList.add(good?'good':'bad-answer');if(good)score++;
+    if(!good){const correct=[...box.querySelectorAll('.comp-option')].find(x=>x.dataset.option===box.dataset.answer);if(correct)correct.classList.add('good')}
+    if(answered===quiz.querySelectorAll('.comp-q').length)$('compScore').textContent='סיימת: '+score+' מתוך '+answered+' תשובות נכונות';
+  }));
+}
+$('buildQuiz').onclick=buildComprehensionQuiz;
+$('newTextBtn').onclick=()=>{stopSpeaking(false);if(rec&&isListening){try{rec.abort()}catch(e){}}location.reload()};
 </script>
 </body></html>
