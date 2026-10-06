@@ -137,6 +137,38 @@ textarea:focus{border-color:#7280ff;box-shadow:0 0 0 5px #7280ff15;background:#f
 .control-group{position:relative}
 .result-strip{border:1px solid #e6edf8}
 @media(max-width:620px){.lesson-progress{gap:6px}.lesson-step{padding:9px 7px;font-size:11px}.lesson-step .num{width:24px;height:24px;border-radius:8px}.guide-card{padding:10px}}
+
+/* v4 — level journey + kids mode */
+.home-main{padding:38px}
+.home-title{font-size:clamp(34px,4vw,54px);line-height:1.04;margin:14px 0 10px;letter-spacing:-1.5px}
+.home-lead{color:var(--muted);font-size:18px;margin:0 0 20px}
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
+.mode-card{border:1px solid #e6ecf8;border-radius:26px;padding:22px;background:#fff;text-align:right;box-shadow:0 14px 32px rgba(41,72,119,.08);transition:.18s;min-height:150px}
+.mode-card:hover{transform:translateY(-2px);box-shadow:0 18px 42px rgba(41,72,119,.12)}
+.mode-card .mode-icon{font-size:38px;display:block;margin-bottom:11px}
+.mode-card strong{display:block;font-size:24px;color:#173d8f}.mode-card small{display:block;color:#72819d;margin-top:6px;line-height:1.45;font-size:14px}
+.mode-card.kids{background:linear-gradient(150deg,#f5fbff,#fff9ec)}.mode-card.school{background:linear-gradient(150deg,#f7f5ff,#f8fbff)}
+.subscreen{margin-top:22px;padding-top:22px;border-top:1px solid #edf1f8}
+.subscreen-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}.subscreen-head h3{margin:0;font-size:25px}.back-mini{border:0;background:#eef3ff;color:#4560bd;border-radius:14px;padding:10px 13px;font-weight:900}
+.level-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.level-card{border:1px solid #e7edf7;background:#fff;border-radius:20px;padding:15px;text-align:right;min-height:125px;transition:.18s}
+.level-card:hover{transform:translateY(-2px);border-color:#cfd9ff}
+.level-card .level-emoji{font-size:28px}.level-card b{display:block;color:#153b8d;font-size:16px;margin-top:6px}.level-card span{display:block;color:#7483a0;font-size:12px;line-height:1.35;margin-top:4px}
+.theme-row{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 4px}.theme-btn{border:1px solid #e4eaf7;background:#fff;color:#4b6088;border-radius:999px;padding:9px 12px;font-weight:850}.theme-btn.active{background:#eef3ff;border-color:#cfdaff;color:#3f5cc5}
+.text-mode-box{margin-top:14px}.text-mode-box textarea{min-height:210px}
+.kids-shell{padding:22px}
+.kids-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}.kids-back{border:0;background:#eef3ff;color:#405cc4;border-radius:14px;padding:10px 13px;font-weight:900}.stars{background:#fff8dd;color:#a87000;border:1px solid #ffe7a7;border-radius:999px;padding:9px 12px;font-weight:950}
+.kids-card{background:linear-gradient(155deg,#ffffff,#f9fbff 65%,#fff9ef);border:1px solid #e9eef8;border-radius:34px;padding:28px;box-shadow:0 24px 58px rgba(42,69,117,.11);text-align:center}
+.kids-label{display:inline-flex;background:#eef3ff;color:#4b63bd;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:900}
+.kids-title{font-size:clamp(28px,4vw,48px);margin:12px 0 5px}.kids-prompt{color:#7584a0;margin-bottom:18px}
+.kids-stage{min-height:285px;border-radius:30px;background:radial-gradient(circle at 50% 24%,#fff 0 8%,transparent 9%),linear-gradient(145deg,#e9f7ff,#f4edff 58%,#fff5df);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:22px;position:relative;overflow:hidden}
+.kids-emoji{font-size:82px;filter:drop-shadow(0 12px 16px rgba(43,72,119,.12));line-height:1}.kids-main{direction:ltr;font-size:clamp(52px,9vw,96px);font-weight:1000;color:#173d8f;line-height:1;margin-top:12px;letter-spacing:-2px}.kids-main.sentence{font-size:clamp(30px,5vw,52px);line-height:1.2;max-width:850px}.kids-sub{direction:ltr;color:#58709c;font-size:22px;font-weight:800;margin-top:10px}.kids-feedback{margin-top:15px;min-height:48px;border-radius:18px;padding:13px 15px;background:#f3f6ff;color:#425a86;font-weight:850}.kids-feedback.good{background:#ebfbf2;color:#118055}.kids-feedback.try{background:#fff7e8;color:#9a6500}
+.kids-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:16px}.kids-action{border:0;border-radius:17px;padding:13px 18px;font-weight:950;color:#fff;background:linear-gradient(135deg,#4967ff,#654bf0)}.kids-action.pink{background:linear-gradient(135deg,#ff5577,#ff726f)}.kids-action.soft{background:#eef3ff;color:#4260bf}.kids-action.next{background:linear-gradient(135deg,#31bc72,#1da85f)}
+.choice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}.choice{border:1px solid #e6ecf7;background:#fff;border-radius:20px;padding:14px;font-size:35px;min-height:90px}.choice.correct{border-color:#71d8a4;background:#edfbf3}.choice.wrong{border-color:#ffb0bf;background:#fff0f3}
+.progress-dots{display:flex;justify-content:center;gap:7px;margin-top:16px}.dot-progress{width:10px;height:10px;border-radius:50%;background:#dfe5f1}.dot-progress.done{background:#5f75f5}.dot-progress.current{background:#ffb433;box-shadow:0 0 0 4px #fff0c8}
+@media(max-width:800px){.mode-grid{grid-template-columns:1fr}.level-grid{grid-template-columns:1fr 1fr}.home-main{padding:24px}.kids-card{padding:18px}.choice-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:520px){.level-grid{grid-template-columns:1fr}.kids-stage{min-height:250px}.kids-emoji{font-size:68px}.kids-actions button{flex:1}.choice{font-size:30px}}
+
 </style>
 </head>
 <body>
@@ -158,12 +190,49 @@ textarea:focus{border-color:#7280ff;box-shadow:0 0 0 5px #7280ff15;background:#f
   </section>
 
   <section id="setup" class="shell setup-grid">
-    <div class="setup-main">
-      <span class="eyebrow">✨ מתחילים מטקסט אחד</span>
-      <h2>איזה טקסט<br>נלמד היום?</h2>
-      <p>הדביקו טקסט באנגלית ונעבור עליו יחד, שלב אחרי שלב.</p>
-      <textarea id="input">Last Saturday, Tom went to the beach with his family. They played in the sand and swam in the sea. Tom found a beautiful shell and showed it to his sister.</textarea>
-      <div class="setup-actions"><button id="start" class="primary">מתחילים לקרוא ←</button></div>
+    <div class="home-main">
+      <span class="eyebrow">✨ בוחרים איך ללמוד</span>
+      <h2 class="home-title">איך נלמד היום?</h2>
+      <p class="home-lead">אפשר להתחיל ממש מהאותיות והמילים הראשונות — או להדביק טקסט מבית הספר ולהתאמן עליו.</p>
+
+      <div id="modeChooser" class="mode-grid">
+        <button id="kidsModeBtn" class="mode-card kids">
+          <span class="mode-icon">🌈</span>
+          <strong>מסלול קריאה לילדים</strong>
+          <small>אותיות → מילים → משפטים → סיפורים קצרים. מתאים גם לילדים שמתחילים מאפס.</small>
+        </button>
+        <button id="textModeBtn" class="mode-card school">
+          <span class="mode-icon">📖</span>
+          <strong>יש לי טקסט</strong>
+          <small>מדביקים טקסט מבית הספר, שומעים אותו, קוראים בקול ומקבלים משוב.</small>
+        </button>
+      </div>
+
+      <div id="kidsChooser" class="subscreen hidden">
+        <div class="subscreen-head"><h3>בחרו רמה</h3><button class="back-mini" id="backModes1">← חזרה</button></div>
+        <div class="level-grid">
+          <button class="level-card" data-level="1"><span class="level-emoji">🔤</span><b>רמה 1 · אותיות וצלילים</b><span>מכירים אות, שומעים את הצליל ומחברים למילה.</span></button>
+          <button class="level-card" data-level="2"><span class="level-emoji">🐣</span><b>רמה 2 · מילים ראשונות</b><span>תמונה + מילה + הקראה + חזרה בקול.</span></button>
+          <button class="level-card" data-level="3"><span class="level-emoji">⭐</span><b>רמה 3 · קוראים מילים</b><span>מילים נפוצות בלי להסתמך רק על תמונה.</span></button>
+          <button class="level-card" data-level="4"><span class="level-emoji">🚀</span><b>רמה 4 · משפטים קצרים</b><span>קוראים משפט קצר ומקבלים משוב.</span></button>
+          <button class="level-card" data-level="5"><span class="level-emoji">📘</span><b>רמה 5 · סיפור קצר</b><span>2–4 משפטים, הקראה, קריאה ותרגול מילים.</span></button>
+          <button class="level-card" data-level="6"><span class="level-emoji">🏆</span><b>רמה 6 · טקסט מלא</b><span>טקסטים מבית הספר, מבחנים ומיפוי.</span></button>
+        </div>
+        <div class="theme-row" id="themeRow">
+          <button class="theme-btn active" data-theme="animals">🐾 חיות</button>
+          <button class="theme-btn" data-theme="space">🚀 חלל</button>
+          <button class="theme-btn" data-theme="games">🎮 גיימינג</button>
+          <button class="theme-btn" data-theme="everyday">🌈 יום־יום</button>
+        </div>
+      </div>
+
+      <div id="textChooser" class="subscreen hidden">
+        <div class="subscreen-head"><h3>הדביקו טקסט באנגלית</h3><button class="back-mini" id="backModes2">← חזרה</button></div>
+        <div class="text-mode-box">
+          <textarea id="input">Last Saturday, Tom went to the beach with his family. They played in the sand and swam in the sea. Tom found a beautiful shell and showed it to his sister.</textarea>
+          <div class="setup-actions"><button id="start" class="primary">מתחילים לקרוא ←</button></div>
+        </div>
+      </div>
     </div>
     <aside class="setup-side">
       <div class="mascot">
@@ -180,10 +249,35 @@ textarea:focus{border-color:#7280ff;box-shadow:0 0 0 5px #7280ff15;background:#f
             <path d="M73 188h74v22H73z" fill="#fff" opacity=".95"/><path d="M110 188v22" stroke="#d9e3ff" stroke-width="3"/>
           </svg>
         </div>
-        <h3>Ready to read?</h3>
-        <p>שומעים, קוראים, ומנסים שוב עד שזה מרגיש קל.</p>
+        <h3>From A to Story ✨</h3>
+        <p>מתחילים איפה שנוח לילד ומתקדמים בקצב שלו.</p>
       </div>
     </aside>
+  </section>
+
+  <section id="kids" class="shell kids-shell hidden">
+    <div class="kids-top">
+      <button id="kidsBack" class="kids-back">← בחירת רמה</button>
+      <div class="stars">⭐ <span id="starCount">0</span> כוכבים</div>
+    </div>
+    <div class="kids-card">
+      <span id="kidsLabel" class="kids-label">רמה 1</span>
+      <h2 id="kidsTitle" class="kids-title">אותיות וצלילים</h2>
+      <div id="kidsPrompt" class="kids-prompt">שומעים, מזהים ומתקדמים.</div>
+      <div class="kids-stage">
+        <div id="kidsEmoji" class="kids-emoji">🍎</div>
+        <div id="kidsMain" class="kids-main">A a</div>
+        <div id="kidsSub" class="kids-sub">Apple</div>
+      </div>
+      <div id="choiceGrid" class="choice-grid hidden"></div>
+      <div id="kidsFeedback" class="kids-feedback">לחצו על 🔊 כדי לשמוע.</div>
+      <div class="kids-actions">
+        <button id="kidsHear" class="kids-action">🔊 שמע</button>
+        <button id="kidsRead" class="kids-action pink hidden">🎤 אני קורא</button>
+        <button id="kidsNext" class="kids-action next">הבא ➜</button>
+      </div>
+      <div id="progressDots" class="progress-dots"></div>
+    </div>
   </section>
 
   <section id="learn" class="shell hidden">
@@ -246,9 +340,132 @@ textarea:focus{border-color:#7280ff;box-shadow:0 0 0 5px #7280ff15;background:#f
 </main>
 
 <script>
-let original='',rec=null,isListening=false,isSpeaking=false,transcript='',speechRate=.82,englishVoices=[];const $=x=>document.getElementById(x);
+let original='',rec=null,isListening=false,isSpeaking=false,transcript='',speechRate=.82,englishVoices=[];
+let currentLevel=1,currentTheme='animals',kidsIndex=0,stars=0,kidsReading=false;
+const $=x=>document.getElementById(x);
+
+const kidsData={
+  letters:[
+    {main:'A a',word:'Apple',emoji:'🍎',sound:'A. Apple.',choices:['🍎','🐶','🚀']},
+    {main:'B b',word:'Ball',emoji:'⚽',sound:'B. Ball.',choices:['⚽','🍌','🐱']},
+    {main:'C c',word:'Cat',emoji:'🐱',sound:'C. Cat.',choices:['🐱','🌞','🚗']},
+    {main:'D d',word:'Dog',emoji:'🐶',sound:'D. Dog.',choices:['🐶','📘','🍎']},
+    {main:'S s',word:'Sun',emoji:'☀️',sound:'S. Sun.',choices:['☀️','🐟','🎮']}
+  ],
+  animals:{
+    words:[['cat','🐱'],['dog','🐶'],['fish','🐟'],['bird','🐦'],['lion','🦁']],
+    harder:[['rabbit','🐰'],['monkey','🐵'],['turtle','🐢'],['elephant','🐘'],['dolphin','🐬']],
+    sentences:['The cat is small.','The dog can run.','I see a yellow bird.','The fish is in the water.','The lion is very strong.'],
+    story:'Tom has a small dog. The dog likes to run in the park. Tom plays with him every afternoon.'
+  },
+  space:{
+    words:[['sun','☀️'],['moon','🌙'],['star','⭐'],['rocket','🚀'],['planet','🪐']],
+    harder:[['astronaut','🧑‍🚀'],['space','🌌'],['planet','🪐'],['rocket','🚀'],['moon','🌙']],
+    sentences:['The moon is bright.','I see a big rocket.','The astronaut is in space.','The planet is blue.','The stars shine at night.'],
+    story:'Maya looks at the night sky. She sees the moon and many stars. She dreams about flying in a rocket.'
+  },
+  games:{
+    words:[['game','🎮'],['block','🧱'],['sword','🗡️'],['coin','🪙'],['team','👥']],
+    harder:[['player','🎮'],['level','🏆'],['build','🧱'],['winner','🥇'],['team','👥']],
+    sentences:['I like this game.','We build a big house.','My team is ready.','I found a gold coin.','The player wins the level.'],
+    story:'Dan likes to play a building game. He makes a big house with his friends. Together they finish the level.'
+  },
+  everyday:{
+    words:[['book','📘'],['home','🏠'],['school','🏫'],['food','🍎'],['friend','🧒']],
+    harder:[['family','👨‍👩‍👧'],['school','🏫'],['morning','🌅'],['friend','🧒'],['happy','😊']],
+    sentences:['I go to school.','My friend is happy.','We eat lunch together.','I read a book at home.','My family is in the kitchen.'],
+    story:'Noa gets up in the morning. She goes to school and meets her friend. After school they read a book together.'
+  }
+};
 function words(s){return s.toLowerCase().replace(/[^a-z' ]/g,' ').split(/\s+/).filter(Boolean)}
-$('start').onclick=()=>{original=$('input').value.trim();if(!original)return;$('setup').classList.add('hidden');$('learn').classList.remove('hidden');resetReading();window.scrollTo({top:0,behavior:'smooth'})}
+function openTextLesson(textValue){
+  original=(textValue||'').trim();if(!original)return;
+  $('setup').classList.add('hidden');$('kids').classList.add('hidden');$('learn').classList.remove('hidden');
+  resetReading();window.scrollTo({top:0,behavior:'smooth'});
+}
+$('start').onclick=()=>openTextLesson($('input').value);
+function showMode(which){
+  $('modeChooser').classList.toggle('hidden',which!=='modes');
+  $('kidsChooser').classList.toggle('hidden',which!=='kids');
+  $('textChooser').classList.toggle('hidden',which!=='text');
+}
+$('kidsModeBtn').onclick=()=>showMode('kids');
+$('textModeBtn').onclick=()=>showMode('text');
+$('backModes1').onclick=()=>showMode('modes');
+$('backModes2').onclick=()=>showMode('modes');
+document.querySelectorAll('.theme-btn').forEach(b=>b.onclick=()=>{currentTheme=b.dataset.theme;document.querySelectorAll('.theme-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active')});
+document.querySelectorAll('.level-card').forEach(b=>b.onclick=()=>{let level=Number(b.dataset.level);if(level===6){showMode('text');return}startKidsLevel(level)});
+$('kidsBack').onclick=()=>{stopSpeaking(false);$('kids').classList.add('hidden');$('setup').classList.remove('hidden');showMode('kids');window.scrollTo({top:0,behavior:'smooth'})};
+
+function getKidsItems(){
+  if(currentLevel===1)return kidsData.letters;
+  const t=kidsData[currentTheme];
+  if(currentLevel===2)return t.words.map(([word,emoji])=>({word,emoji,main:word,sub:'',speak:word}));
+  if(currentLevel===3)return t.harder.map(([word,emoji])=>({word,emoji:'',main:word,sub:'',speak:word}));
+  if(currentLevel===4)return t.sentences.map(s=>({word:s,emoji:'',main:s,sub:'',speak:s}));
+  return [{word:t.story,emoji:'📘',main:'Short Story',sub:t.story,speak:t.story}];
+}
+function startKidsLevel(level){
+  currentLevel=level;kidsIndex=0;kidsReading=false;
+  $('setup').classList.add('hidden');$('learn').classList.add('hidden');$('kids').classList.remove('hidden');
+  renderKidsItem();window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderKidsItem(){
+  const items=getKidsItems(),item=items[kidsIndex];
+  const names={1:'אותיות וצלילים',2:'מילים ראשונות',3:'קוראים מילים',4:'משפטים קצרים',5:'סיפור קצר'};
+  $('kidsLabel').textContent='רמה '+currentLevel;
+  $('kidsTitle').textContent=names[currentLevel];
+  $('kidsPrompt').textContent=currentLevel===1?'שמעו את האות והצליל, ואז בחרו את התמונה המתאימה.':currentLevel===5?'שומעים סיפור קצר ואז עוברים למסך הקריאה המלא.':'שמעו, קראו בקול, וקבלו משוב.';
+  $('kidsEmoji').textContent=item.emoji||'';
+  $('kidsMain').textContent=item.main;
+  $('kidsMain').classList.toggle('sentence',currentLevel>=4);
+  $('kidsSub').textContent=item.sub||item.word||'';
+  $('kidsFeedback').className='kids-feedback';
+  $('kidsFeedback').textContent=currentLevel===1?'לחצו על 🔊 ואז בחרו את התמונה הנכונה.':currentLevel===5?'לחצו על “פתח סיפור” כדי לעבור לקריאה מלאה.':'לחצו על 🔊 כדי לשמוע ואז נסו לקרוא.';
+  $('kidsHear').textContent=currentLevel===5?'🔊 שמע סיפור':'🔊 שמע';
+  $('kidsRead').classList.toggle('hidden',currentLevel===1||currentLevel===5);
+  $('kidsRead').textContent='🎤 אני קורא';
+  $('kidsNext').textContent=currentLevel===5?'📖 פתח סיפור':'הבא ➜';
+  if(currentLevel===1){
+    $('choiceGrid').classList.remove('hidden');
+    const choices=[...item.choices].sort(()=>Math.random()-.5);
+    $('choiceGrid').innerHTML=choices.map(x=>'<button class="choice" data-choice="'+x+'">'+x+'</button>').join('');
+    $('choiceGrid').querySelectorAll('.choice').forEach(btn=>btn.onclick=()=>checkLetterChoice(btn,item.emoji));
+  }else $('choiceGrid').classList.add('hidden');
+  $('progressDots').innerHTML=items.map((_,i)=>'<span class="dot-progress '+(i<kidsIndex?'done':i===kidsIndex?'current':'')+'"></span>').join('');
+}
+function checkLetterChoice(btn,answer){
+  $('choiceGrid').querySelectorAll('.choice').forEach(x=>x.disabled=true);
+  if(btn.dataset.choice===answer){btn.classList.add('correct');awardStar();$('kidsFeedback').className='kids-feedback good';$('kidsFeedback').textContent='מעולה! ⭐';}
+  else{btn.classList.add('wrong');$('kidsFeedback').className='kids-feedback try';$('kidsFeedback').textContent='כמעט. שמע שוב ונסה בפריט הבא.';}
+}
+function awardStar(){stars++;$('starCount').textContent=stars}
+$('kidsHear').onclick=()=>{const item=getKidsItems()[kidsIndex];say(currentLevel===1?item.sound:item.speak,.75);};
+$('kidsNext').onclick=()=>{const items=getKidsItems();if(currentLevel===5){openTextLesson(items[0].speak);return}kidsIndex=(kidsIndex+1)%items.length;renderKidsItem();};
+$('kidsRead').onclick=()=>practiceKidsSpeech();
+
+function practiceKidsSpeech(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){$('kidsFeedback').className='kids-feedback try';$('kidsFeedback').textContent='זיהוי דיבור אינו נתמך כאן. נסו ב-Chrome.';return}
+  const item=getKidsItems()[kidsIndex],target=item.speak.toLowerCase().replace(/[^a-z' ]/g,' ').trim();
+  const r=new SR();r.lang='en-US';r.interimResults=false;r.continuous=false;
+  $('kidsRead').textContent='🎤 מקשיב...';$('kidsFeedback').textContent='קרא עכשיו בקול.';
+  r.onresult=e=>{
+    const heard=e.results[0][0].transcript.toLowerCase().replace(/[^a-z' ]/g,' ').trim();
+    let good=currentLevel<=3?(heard===target||heard.includes(target)||target.includes(heard)):alignSimple(target,heard)>=.6;
+    if(good){awardStar();$('kidsFeedback').className='kids-feedback good';$('kidsFeedback').textContent='מצוין! קראת נכון ⭐';}
+    else{$('kidsFeedback').className='kids-feedback try';$('kidsFeedback').textContent='כמעט. שמע שוב ונסה עוד פעם.';}
+  };
+  r.onend=()=>{$('kidsRead').textContent='🎤 אני קורא'};
+  r.onerror=()=>{$('kidsRead').textContent='🎤 אני קורא';$('kidsFeedback').className='kids-feedback try';$('kidsFeedback').textContent='לא הצלחתי לשמוע. נסה שוב.'};
+  r.start();
+}
+function alignSimple(a,b){
+  const aw=a.split(/\s+/),bw=b.split(/\s+/);let hits=0,used=[];
+  aw.forEach(w=>{let i=bw.findIndex((x,idx)=>!used.includes(idx)&&x===w);if(i>=0){hits++;used.push(i)}});
+  return aw.length?hits/aw.length:0;
+}
+
 function render(bad=[]){const set=new Set(bad);$('text').innerHTML=original.split(/(\s+)/).map(x=>{let w=x.toLowerCase().replace(/[^a-z']/g,'');return w&&set.has(w)?'<span class="bad">'+x+'</span>':x}).join('')}
 function loadVoices(){const all=speechSynthesis.getVoices();englishVoices=all.filter(v=>/^en[-_]US$/i.test(v.lang));const sel=$('voice');if(!englishVoices.length){sel.innerHTML='<option>US English · ברירת מחדל</option>';return}const rank=v=>/natural|premium|enhanced|google|microsoft|samantha|ava|aria|jenny|guy/i.test(v.name)?0:1;englishVoices.sort((a,b)=>rank(a)-rank(b)||a.name.localeCompare(b.name));sel.innerHTML=englishVoices.map((v,i)=>'<option value="'+i+'">'+v.name.replace(/^Microsoft |^Google /,'')+'</option>').join('')}
 loadVoices();speechSynthesis.onvoiceschanged=loadVoices;
