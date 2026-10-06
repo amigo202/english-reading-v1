@@ -3,629 +3,554 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Read English</title>
+<title>Read in English</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#12306a;--muted:#6d7f9d;--blue:#4d5bf9;--blue2:#6848f5;--red:#ff4f73;
-  --green:#24b36b;--orange:#ff9e2e;--line:#e9eef9;--soft:#f6f8ff;--white:#fff;
+  --bg:#f6f8fc;--surface:#ffffff;--surface-2:#f9fbff;--ink:#18315f;--muted:#71809c;--line:#e7edf7;
+  --blue:#4d6bff;--blue-2:#6b53f2;--cyan:#59b9ff;--coral:#ff667a;--mint:#2fc77c;--gold:#f7b942;
+  --shadow:0 24px 60px rgba(32,56,105,.12);--radius-xl:34px;--radius-lg:24px;--radius-md:16px;
 }
 *{box-sizing:border-box}
-body{
-  margin:0;font-family:Inter,Arial,sans-serif;color:var(--ink);min-height:100vh;
-  background:
-    radial-gradient(circle at 12% 12%,#dff2ff 0 13%,transparent 14%),
-    radial-gradient(circle at 90% 8%,#fff0d8 0 11%,transparent 12%),
-    linear-gradient(145deg,#f7fbff 0%,#fffaf4 54%,#f5f5ff 100%);
-}
-button,select,textarea{font:inherit}
+html,body{margin:0}
+body{font-family:"Rubik",system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:var(--ink);background:
+  radial-gradient(circle at 8% 0%,rgba(94,190,255,.19),transparent 25%),
+  radial-gradient(circle at 94% 8%,rgba(255,207,116,.18),transparent 24%),
+  linear-gradient(180deg,#fbfdff 0,#f6f8fc 46%,#f7f7fb 100%);min-height:100vh}
+button,textarea,select{font:inherit}
 button{cursor:pointer}
-.app{max-width:1180px;margin:auto;padding:28px 22px 54px}
-.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:22px}
-.brand{display:flex;align-items:center;gap:14px}
-.brand-mark{
-  width:58px;height:58px;border-radius:18px;display:grid;place-items:center;color:#fff;font-size:30px;
-  background:linear-gradient(145deg,var(--blue),var(--blue2));box-shadow:0 14px 34px #4d5bf934;
-}
-.brand h1{margin:0;font-size:clamp(28px,4vw,44px);letter-spacing:-1.5px;color:#143b8e}
-.brand h1 span{color:#ffb22d}.brand p{margin:4px 0 0;color:var(--muted);font-weight:700}
-.badge{padding:10px 14px;border:1px solid #e4e9f7;background:#ffffffcc;border-radius:999px;color:#47618e;font-size:14px;font-weight:800;box-shadow:0 8px 20px #526b9a12}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:12px 0 22px}
-.step{background:#fff;border:1px solid #eef1f8;border-radius:24px;padding:17px 18px;display:flex;align-items:center;gap:13px;box-shadow:0 14px 35px #29487710}
-.step-icon{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;font-size:22px;color:#fff;flex:0 0 auto}
-.step:nth-child(1) .step-icon{background:linear-gradient(145deg,#4d8fff,#5575ff)}
-.step:nth-child(2) .step-icon{background:linear-gradient(145deg,#ff9c39,#ff7f22)}
-.step:nth-child(3) .step-icon{background:linear-gradient(145deg,#36c979,#1ca65d)}
-.step strong{display:block;font-size:16px}.step small{display:block;color:var(--muted);margin-top:3px}
-.shell{background:#fff;border:1px solid #e9eef8;border-radius:34px;box-shadow:0 28px 75px #263e7117;overflow:hidden}
-.setup-grid{display:grid;grid-template-columns:1.3fr .7fr;min-height:560px}
-.setup-main{padding:42px}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;color:#5368bb;background:#eff2ff;border-radius:999px;padding:8px 12px;font-size:13px;font-weight:800}
-.setup-main h2{font-size:clamp(30px,4vw,48px);line-height:1.05;margin:18px 0 10px;letter-spacing:-1.4px}
-.setup-main p{color:var(--muted);font-size:18px;margin:0 0 20px}
-textarea{width:100%;min-height:245px;resize:vertical;border:2px solid #e1e8f7;border-radius:24px;padding:22px;direction:ltr;text-align:left;font-size:19px;line-height:1.75;color:#21365e;background:#fbfcff;outline:none;transition:.2s}
-textarea:focus{border-color:#7280ff;box-shadow:0 0 0 5px #7280ff15;background:#fff}
-.primary{
-  border:0;border-radius:18px;padding:15px 25px;color:#fff;font-size:17px;font-weight:900;
-  background:linear-gradient(135deg,var(--blue),var(--blue2));box-shadow:0 12px 26px #4d5bf932;
-}
-.primary:hover{transform:translateY(-1px)}
-.setup-actions{display:flex;justify-content:flex-start;margin-top:16px}
-.setup-side{position:relative;overflow:hidden;background:linear-gradient(160deg,#eef5ff,#f7efff 55%,#fff6e7);display:flex;align-items:center;justify-content:center;padding:28px}
-.setup-side:before,.setup-side:after{content:"";position:absolute;border-radius:50%;filter:blur(2px)}
-.setup-side:before{width:220px;height:220px;background:#ffd97075;top:-65px;left:-60px}
-.setup-side:after{width:260px;height:260px;background:#94c7ff6e;right:-85px;bottom:-80px}
-.mascot{position:relative;z-index:1;width:min(100%,310px);background:#ffffffdd;border:1px solid #fff;border-radius:30px;padding:22px;box-shadow:0 25px 55px #3a5a9420;text-align:center}
-.mascot-visual{height:235px;border-radius:25px;background:linear-gradient(160deg,#d9edff,#f3eaff);display:flex;align-items:center;justify-content:center;overflow:hidden}
-.mascot svg{width:210px;height:210px}
-.mascot h3{margin:17px 0 6px;font-size:22px}.mascot p{margin:0;color:var(--muted);font-size:14px}
 .hidden{display:none!important}
-.learn-wrap{padding:24px}
-.lesson-head{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:18px;padding:6px 4px}
-.lesson-title small{display:block;color:#6b7c9e;font-weight:800;margin-bottom:4px}.lesson-title h2{margin:0;font-size:30px;letter-spacing:-.7px}
-.lesson-pill{padding:10px 14px;background:#f4f6ff;border-radius:999px;color:#5268b5;font-weight:800;font-size:13px}
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;white-space:nowrap!important;border:0!important}
+.app{max-width:1220px;margin:0 auto;padding:22px 18px 56px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:26px}
+.brand{display:flex;align-items:center;gap:14px;direction:ltr}
+.brand-mark{width:48px;height:48px;border-radius:16px;background:linear-gradient(145deg,var(--blue),var(--blue-2));display:grid;place-items:center;box-shadow:0 12px 28px rgba(77,107,255,.28)}
+.brand-mark svg{width:26px;height:26px;fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.brand-name{font-family:"Fredoka",sans-serif;font-weight:700;font-size:28px;letter-spacing:-.7px;color:#183a7e;line-height:1}
+.brand-name span{color:var(--gold)}
+.brand-sub{font-size:12px;color:var(--muted);font-weight:700;margin-top:3px}
+.top-actions{display:flex;align-items:center;gap:10px}
+.ghost-btn{border:1px solid var(--line);background:rgba(255,255,255,.82);color:#4f648c;border-radius:14px;padding:10px 13px;font-weight:700}
+.shell{background:rgba(255,255,255,.95);border:1px solid var(--line);border-radius:var(--radius-xl);box-shadow:var(--shadow);overflow:hidden}
+.hero{display:grid;grid-template-columns:1.04fr .96fr;gap:30px;align-items:center;padding:42px}
+.kicker{display:inline-flex;align-items:center;gap:8px;background:#eef2ff;color:#4e62c8;border-radius:999px;padding:8px 12px;font-size:13px;font-weight:800}
+.hero h1{font-family:"Fredoka","Rubik",sans-serif;font-size:clamp(42px,6vw,78px);line-height:.98;letter-spacing:-2.6px;margin:18px 0 14px;color:#153a80}
+.hero h1 .accent{color:var(--gold)}
+.hero p{font-size:19px;line-height:1.7;color:var(--muted);margin:0;max-width:670px}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.primary-btn,.secondary-btn{border:0;border-radius:18px;padding:14px 19px;font-weight:800}
+.primary-btn{color:#fff;background:linear-gradient(135deg,var(--blue),var(--blue-2));box-shadow:0 14px 28px rgba(77,107,255,.22)}
+.secondary-btn{color:#3857b7;background:#eef3ff}
+.hero-visual{position:relative;min-height:390px;background:
+  radial-gradient(circle at 66% 20%,rgba(255,225,133,.9),transparent 25%),
+  radial-gradient(circle at 20% 84%,rgba(114,198,255,.55),transparent 31%),
+  linear-gradient(155deg,#eaf5ff,#f4ecff 58%,#fff6e7);border-radius:30px;overflow:hidden;border:1px solid #e9eef8}
+.hero-desk{position:absolute;inset:auto 20px 18px 20px;height:128px;border-radius:24px;background:rgba(255,255,255,.82);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.9);box-shadow:0 20px 46px rgba(51,75,127,.14);padding:18px}
+.fake-title{font-family:"Fredoka";font-weight:700;font-size:24px;direction:ltr;text-align:left}
+.fake-line{height:14px;border-radius:999px;background:#e7edf8;margin-top:10px}
+.fake-line:nth-child(2){width:88%}.fake-line:nth-child(3){width:72%}
+.fake-actions{display:flex;gap:8px;margin-top:14px}
+.fake-chip{height:34px;border-radius:12px;flex:1}.fake-chip.blue{background:linear-gradient(135deg,#5574ff,#6a55ed)}.fake-chip.coral{background:linear-gradient(135deg,#ff6c7e,#ff7e73)}
+.character{position:absolute;right:32px;top:32px;width:225px;height:275px}
+.character svg{width:100%;height:100%}
+.float-card{position:absolute;background:rgba(255,255,255,.92);border:1px solid #e9eef8;box-shadow:0 16px 40px rgba(36,61,111,.12);border-radius:20px;padding:12px 14px;font-size:13px;font-weight:800}
+.float-card.one{left:18px;top:28px}.float-card.two{left:40px;top:102px}
+.home-section{padding:34px 38px 40px}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:18px}
+.section-head h2{margin:0;font-size:28px}.section-head p{margin:6px 0 0;color:var(--muted)}
+.route-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.route-card{border:1px solid var(--line);background:linear-gradient(160deg,#fff,#fbfcff);border-radius:26px;padding:22px;text-align:right;transition:.18s;min-height:180px}
+.route-card:hover{transform:translateY(-2px);box-shadow:0 16px 36px rgba(36,61,111,.10)}
+.route-icon{width:52px;height:52px;border-radius:17px;display:grid;place-items:center;margin-bottom:15px}
+.route-icon svg{width:27px;height:27px;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.route-card.guided .route-icon{background:#edf2ff}.route-card.guided svg{stroke:#4e69e8}
+.route-card.text .route-icon{background:#fff0f3}.route-card.text svg{stroke:#e4516d}
+.route-card strong{font-size:23px}.route-card small{display:block;color:var(--muted);line-height:1.5;margin-top:8px}
+.theme-row{display:flex;gap:9px;flex-wrap:wrap;margin:18px 0 22px}
+.theme-btn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 13px;font-weight:700;color:#506381}
+.theme-btn.active{background:#eef3ff;border-color:#ced9ff;color:#3f5cc3}
+.levels{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.level-card{border:1px solid var(--line);background:#fff;border-radius:22px;padding:17px;text-align:right;position:relative;overflow:hidden;min-height:146px}
+.level-card:before{content:"";position:absolute;inset:0 auto 0 0;width:5px;background:var(--blue)}
+.level-card:nth-child(2):before{background:#57a8ff}.level-card:nth-child(3):before{background:#2fc77c}.level-card:nth-child(4):before{background:#f3b345}.level-card:nth-child(5):before{background:#ff7a6c}.level-card:nth-child(6):before{background:#6553e8}
+.level-num{width:34px;height:34px;border-radius:12px;background:#eff3ff;color:#4760c8;display:grid;place-items:center;font-weight:800;margin-bottom:10px}
+.level-card h3{font-size:17px;margin:0}.level-card p{font-size:13px;color:var(--muted);line-height:1.45;margin:6px 0 0}.level-card button{position:absolute;left:14px;bottom:14px;border:0;background:#f1f4fb;color:#40577f;border-radius:12px;padding:8px 11px;font-weight:800}
+.subview{padding:34px 38px 40px}
+.back-row{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
+.back-btn{border:0;background:#eef3ff;color:#405dc1;border-radius:14px;padding:10px 13px;font-weight:800}
+.text-input{width:100%;min-height:250px;border:2px solid #e2e8f4;border-radius:24px;padding:20px 22px;direction:ltr;text-align:left;font-size:19px;line-height:1.75;color:#213968;background:#fbfdff;outline:none}
+.text-input:focus{border-color:#7284ff;box-shadow:0 0 0 5px rgba(86,105,255,.10)}
+.input-actions{display:flex;justify-content:flex-start;margin-top:14px}
+.junior-wrap{padding:24px}
+.junior-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.progress-pill{background:#fff7df;color:#956400;border:1px solid #ffe6a5;border-radius:999px;padding:9px 12px;font-weight:800}
+.junior-card{background:linear-gradient(150deg,#fff,#f8fbff 62%,#fff9ee);border:1px solid var(--line);border-radius:30px;padding:28px;box-shadow:0 18px 44px rgba(42,67,117,.10)}
+.junior-meta{display:flex;justify-content:center;gap:10px;align-items:center;margin-bottom:14px}
+.level-badge{background:#eef3ff;color:#4a63be;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:800}
+.progress-text{color:var(--muted);font-size:12px;font-weight:700}
+.junior-stage{min-height:320px;border-radius:28px;background:
+ radial-gradient(circle at 50% 18%,#fff 0 8%,transparent 9%),
+ linear-gradient(145deg,#e9f7ff,#f3edff 58%,#fff3d8);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:26px;position:relative;overflow:hidden}
+.junior-stage .emoji{font-size:78px;line-height:1;filter:drop-shadow(0 12px 14px rgba(41,72,119,.12))}
+.junior-main{font-family:"Fredoka","Rubik",sans-serif;direction:ltr;font-size:clamp(58px,9vw,96px);font-weight:700;color:#173b81;line-height:1;margin-top:10px;letter-spacing:-1.5px;text-align:center}
+.junior-main.sentence{font-size:clamp(30px,4.8vw,52px);line-height:1.2;max-width:850px}
+.junior-sub{direction:ltr;font-family:"Fredoka","Rubik",sans-serif;color:#5e74a2;font-size:22px;font-weight:600;margin-top:10px;text-align:center}
+.junior-feedback{margin-top:14px;min-height:48px;border-radius:17px;padding:13px 15px;background:#f3f6ff;color:#425a86;font-weight:700;text-align:center}
+.junior-feedback.good{background:#ebfbf2;color:#128056}.junior-feedback.try{background:#fff7e8;color:#976300}
+.junior-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:15px}
+.action-btn{border:0;border-radius:16px;padding:12px 17px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--blue),var(--blue-2))}
+.action-btn.coral{background:linear-gradient(135deg,#ff617b,#ff7d73)}.action-btn.mint{background:linear-gradient(135deg,#32c67b,#22ad67)}.action-btn.soft{background:#eef3ff;color:#405cc0}
+.choice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.choice{border:1px solid #e4eaf6;background:#fff;border-radius:19px;padding:15px;min-height:92px;font-size:34px}
+.choice.good{background:#edfbf3;border-color:#8cdeb4}.choice.bad{background:#fff0f3;border-color:#ffb7c4}
+.progress-bar{height:9px;background:#e9eef7;border-radius:999px;overflow:hidden;margin-top:16px}.progress-bar span{display:block;height:100%;background:linear-gradient(90deg,#4f6cff,#7f64f1);border-radius:inherit}
+.lesson{padding:22px}
+.lesson-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.lesson-title small{display:block;color:var(--muted);font-weight:700;margin-bottom:4px}.lesson-title h2{margin:0;font-family:"Fredoka","Rubik";font-size:32px}
+.lesson-stepper{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.step{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:#f8faff;color:#72809b;border-radius:16px;padding:10px 11px;font-size:12px;font-weight:800}
+.step .n{width:26px;height:26px;border-radius:9px;display:grid;place-items:center;background:#e8edf7;color:#536482}
+.step.active{background:#eef2ff;color:#3450b4;border-color:#d7dfff}.step.active .n{background:linear-gradient(135deg,var(--blue),var(--blue-2));color:#fff}
 .lesson-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:18px}
-.reading-card,.control-card,.practice-card,.understand-card,.result-strip{border:1px solid #e9eef8;background:#fff;border-radius:28px;box-shadow:0 15px 35px #2948770c}
-.reading-card{padding:24px}
-.text{direction:ltr;text-align:left;font-size:26px;line-height:1.95;color:#18366e;background:linear-gradient(180deg,#fbfdff,#f7f9ff);border:1px solid #e8eefb;border-radius:24px;padding:24px;min-height:225px}
-.bad{background:#ffe0e6;color:#be2643;border-radius:8px;padding:2px 5px;box-shadow:inset 0 -2px 0 #ff91a6}
-.status{margin-top:14px;border-radius:18px;padding:14px 16px;background:#f3f6ff;color:#3e5684;text-align:center;font-weight:700}
-.status.listening{background:#ecfff6;color:#0d7b58;border:1px solid #aee8cf}
-.pulse{display:inline-block;width:10px;height:10px;background:#ff4966;border-radius:50%;margin-left:8px;animation:p 1s infinite}@keyframes p{50%{opacity:.3;transform:scale(1.4)}}
-.live{direction:ltr;text-align:left;color:#687895;font-size:14px;min-height:22px;margin-top:10px;max-height:44px;overflow:hidden}
-.control-card{padding:18px;align-self:start;position:sticky;top:18px}
-.control-title{font-weight:900;margin:2px 0 13px;font-size:16px}
-.big-action{width:100%;border:0;border-radius:18px;padding:15px 16px;color:#fff;font-size:17px;font-weight:900;margin-bottom:10px;box-shadow:0 10px 24px #315bfb24}
-#speak{background:linear-gradient(135deg,#4267ff,#6650f4)}
-#read{background:linear-gradient(135deg,#ff4f73,#ff6c78)}
-.secondary{width:100%;border:1px solid #e2e8f6;border-radius:16px;background:#f8faff;color:#3d5997;padding:12px 14px;font-weight:800;margin-bottom:10px}
-.control-group{background:#f8faff;border:1px solid #edf1fa;border-radius:18px;padding:13px;margin:10px 0}
-.control-label{display:block;color:#6f80a0;font-size:12px;font-weight:900;margin-bottom:8px}
-.voice-row{display:flex;gap:7px}
-.voice-row select{min-width:0;flex:1;border:1px solid #dce4f3;background:#fff;border-radius:12px;padding:10px;color:#33496f}
-.voice-row button{width:42px;border:0;border-radius:12px;background:#eaf0ff;color:#3f5ed2;font-weight:900}
-.speed{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
-.speed button{border:0;border-radius:12px;padding:9px 5px;background:#eef2fb;color:#536584;font-weight:800;font-size:13px}
-.speed button.active{background:linear-gradient(135deg,#4267ff,#6650f4);color:#fff}
-.result-strip{display:grid;grid-template-columns:1.3fr repeat(3,.7fr);gap:10px;align-items:stretch;padding:12px;margin-top:18px;background:linear-gradient(90deg,#fff,#fbfcff)}
-.result-main,.stat{border-radius:18px;padding:14px}
-.result-main{display:flex;align-items:center;gap:12px;background:#f8fff9}.result-main .trophy{font-size:35px}.result-main strong{display:block;color:#15915b;font-size:18px}.result-main small{color:#657590}
-.stat{text-align:center;background:#f5f7ff}.stat b{display:block;font-size:25px}.stat small{color:#7483a0}.stat.green{background:#edfbf2}.stat.red{background:#fff0f3}.stat.blue{background:#eef4ff}
-.lower{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}.practice-card,.understand-card{padding:22px}.practice-card h3,.understand-card h3{margin:0 0 10px}
-.wordbox{text-align:center}.wordbox button{border:0;border-radius:14px;padding:10px 14px;margin:5px;background:#fff0f3;color:#bf2e4a;font-weight:900}
-.understand-card p{color:#6d7d99;margin-bottom:16px}.newtext{border:0;border-radius:14px;padding:11px 15px;background:#eef3ff;color:#405bc2;font-weight:900}
-@media(max-width:900px){.setup-grid,.lesson-grid{grid-template-columns:1fr}.setup-side{display:none}.control-card{position:static}.result-strip{grid-template-columns:1fr 1fr}.result-main{grid-column:1/-1}.lower{grid-template-columns:1fr}}
-@media(max-width:620px){.app{padding:14px 10px 35px}.topbar{align-items:flex-start}.badge{display:none}.brand-mark{width:48px;height:48px;border-radius:15px}.brand h1{font-size:30px}.brand p{font-size:13px}.steps{gap:7px}.step{padding:11px 7px;justify-content:center;text-align:center;border-radius:18px}.step-icon{width:37px;height:37px;border-radius:12px;font-size:18px}.step div:last-child{display:none}.setup-main{padding:22px}.shell{border-radius:26px}.learn-wrap{padding:13px}.lesson-head{align-items:flex-start}.lesson-title h2{font-size:24px}.text{font-size:21px;padding:16px;border-radius:20px}.reading-card,.control-card,.practice-card,.understand-card{padding:14px;border-radius:22px}.result-strip{grid-template-columns:repeat(3,1fr)}.result-main{grid-column:1/-1}.stat{padding:10px 5px}.stat b{font-size:20px}}
-
-/* v2 visual polish — closer to the premium reading-app reference */
-.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:28px;align-items:center;margin:2px 0 26px}
-.logo-lockup{position:relative;padding:8px 8px 4px;text-align:left;direction:ltr;min-height:190px}
-.logo-primary,.logo-secondary{font-weight:1000;line-height:.82;letter-spacing:-4px;width:max-content;position:relative;z-index:2}
-.logo-primary{font-size:clamp(66px,8.5vw,112px);color:#fff;-webkit-text-stroke:7px #153b8d;paint-order:stroke fill;filter:drop-shadow(0 8px 0 #0e2f76) drop-shadow(0 18px 18px rgba(28,63,140,.16))}
-.logo-secondary{font-size:clamp(58px,7.8vw,104px);color:#ffd35c;-webkit-text-stroke:7px #153b8d;paint-order:stroke fill;margin-top:7px;filter:drop-shadow(0 8px 0 #0e2f76) drop-shadow(0 18px 18px rgba(28,63,140,.16))}
-.logo-tagline{font-size:clamp(17px,2vw,27px);font-weight:950;color:#183c86;margin:20px 0 0 10px;letter-spacing:-.4px}.logo-tagline b{color:#f5b62d;padding:0 5px}
-.logo-star{position:absolute;color:#ffd04d;-webkit-text-stroke:3px #fff;paint-order:stroke fill;font-size:38px;filter:drop-shadow(0 5px 8px rgba(233,166,0,.25));z-index:3}.star-a{right:14%;top:13px;transform:rotate(12deg)}.star-b{left:-4px;top:70px;transform:rotate(-14deg)}
-.hero-features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.hero-feature{background:rgba(255,255,255,.94);border:1px solid #e9eef8;border-radius:31px;padding:22px 14px;text-align:center;box-shadow:0 20px 45px rgba(42,69,117,.11);min-height:172px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px}
-.hero-feature strong{font-size:clamp(17px,1.55vw,23px);line-height:1.12;color:#14356f}
-.hero-icon{width:62px;height:62px;border-radius:20px;display:grid;place-items:center;color:#fff;font-size:29px;box-shadow:0 12px 24px rgba(35,74,150,.16)}
-.hero-icon.blue{background:linear-gradient(145deg,#4b92ff,#5268ff)}.hero-icon.orange{background:linear-gradient(145deg,#ffab36,#ff8127)}.hero-icon.green{background:linear-gradient(145deg,#43d27f,#1eae61)}
-.setup-side{background:radial-gradient(circle at 70% 20%,rgba(255,217,117,.58),transparent 27%),radial-gradient(circle at 15% 78%,rgba(119,190,255,.56),transparent 34%),linear-gradient(150deg,#eef6ff,#f7efff 54%,#fff7e9)}
-.mascot{transform:translateY(-2px);border:1px solid rgba(255,255,255,.95);box-shadow:0 28px 70px rgba(45,75,132,.18)}
-.mascot-visual{background:radial-gradient(circle at 48% 22%,#fff 0 8%,transparent 9%),linear-gradient(160deg,#d7eeff,#f2e9ff 58%,#fff1d6)}
-.card,.shell,.reading-card,.control-card,.practice-card,.understand-card,.result-strip{backdrop-filter:blur(8px)}
-.primary,.big-action{transition:transform .18s ease,box-shadow .18s ease}.primary:hover,.big-action:hover{transform:translateY(-2px)}
-@media(max-width:900px){.hero-grid{grid-template-columns:1fr}.logo-lockup{text-align:center}.logo-primary,.logo-secondary{margin-left:auto;margin-right:auto}.logo-tagline{margin-left:0}.hero-features{max-width:720px;margin:0 auto;width:100%}}
-@media(max-width:620px){.hero-grid{gap:14px}.logo-lockup{min-height:145px}.logo-primary{font-size:66px;-webkit-text-stroke:5px #153b8d}.logo-secondary{font-size:58px;-webkit-text-stroke:5px #153b8d}.logo-tagline{font-size:14px;margin-top:13px}.logo-star{font-size:28px}.hero-features{gap:7px}.hero-feature{border-radius:20px;min-height:112px;padding:12px 5px}.hero-icon{width:42px;height:42px;border-radius:13px;font-size:20px}.hero-feature strong{font-size:12px}}
-
-
-/* v3 product polish */
-.hero-grid{max-width:1140px;margin-left:auto;margin-right:auto}
-.logo-primary{font-size:clamp(62px,7.4vw,98px)}
-.logo-secondary{font-size:clamp(54px,6.8vw,90px)}
-.lesson-progress{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 16px}
-.lesson-step{display:flex;align-items:center;gap:9px;background:#f7f9ff;border:1px solid #e9eef9;border-radius:18px;padding:11px 13px;color:#71809c;font-weight:850;font-size:13px}
-.lesson-step .num{width:28px;height:28px;border-radius:10px;display:grid;place-items:center;background:#e9eefb;color:#526583;font-weight:950}
-.lesson-step.active{background:linear-gradient(135deg,#eef2ff,#f8f6ff);color:#3450b7;border-color:#d9e1ff}
-.lesson-step.active .num{background:linear-gradient(135deg,#4b67ff,#674bf1);color:#fff;box-shadow:0 6px 14px rgba(79,97,240,.2)}
-.guide-card{display:flex;align-items:center;gap:11px;background:linear-gradient(135deg,#f5f9ff,#fff8ed);border:1px solid #e9eef8;border-radius:20px;padding:12px;margin-bottom:14px}
-.guide-avatar{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,#d9ecff,#efe6ff);font-size:25px}
-.guide-card strong{display:block;font-size:15px}.guide-card small{display:block;color:#7a89a4;margin-top:3px;line-height:1.3}
-.action-label{display:flex;align-items:center;justify-content:space-between;color:#6b7b99;font-size:12px;font-weight:900;margin:10px 2px 7px}
-.action-label span:last-child{font-weight:800;color:#9aa7bc}
-#speak.speaking{background:linear-gradient(135deg,#1d2535,#333d52);box-shadow:0 10px 24px rgba(31,37,52,.18)}
-.us-chip{display:inline-flex;align-items:center;gap:6px;background:#eef4ff;color:#4462b9;border-radius:999px;padding:6px 9px;font-size:11px;font-weight:900}
-.control-group{position:relative}
-.result-strip{border:1px solid #e6edf8}
-@media(max-width:620px){.lesson-progress{gap:6px}.lesson-step{padding:9px 7px;font-size:11px}.lesson-step .num{width:24px;height:24px;border-radius:8px}.guide-card{padding:10px}}
-
-/* v4 — level journey + kids mode */
-.home-main{padding:38px}
-.home-title{font-size:clamp(34px,4vw,54px);line-height:1.04;margin:14px 0 10px;letter-spacing:-1.5px}
-.home-lead{color:var(--muted);font-size:18px;margin:0 0 20px}
-.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
-.mode-card{border:1px solid #e6ecf8;border-radius:26px;padding:22px;background:#fff;text-align:right;box-shadow:0 14px 32px rgba(41,72,119,.08);transition:.18s;min-height:150px}
-.mode-card:hover{transform:translateY(-2px);box-shadow:0 18px 42px rgba(41,72,119,.12)}
-.mode-card .mode-icon{font-size:38px;display:block;margin-bottom:11px}
-.mode-card strong{display:block;font-size:24px;color:#173d8f}.mode-card small{display:block;color:#72819d;margin-top:6px;line-height:1.45;font-size:14px}
-.mode-card.kids{background:linear-gradient(150deg,#f5fbff,#fff9ec)}.mode-card.school{background:linear-gradient(150deg,#f7f5ff,#f8fbff)}
-.subscreen{margin-top:22px;padding-top:22px;border-top:1px solid #edf1f8}
-.subscreen-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}.subscreen-head h3{margin:0;font-size:25px}.back-mini{border:0;background:#eef3ff;color:#4560bd;border-radius:14px;padding:10px 13px;font-weight:900}
-.level-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.level-card{border:1px solid #e7edf7;background:#fff;border-radius:20px;padding:15px;text-align:right;min-height:125px;transition:.18s}
-.level-card:hover{transform:translateY(-2px);border-color:#cfd9ff}
-.level-card .level-emoji{font-size:28px}.level-card b{display:block;color:#153b8d;font-size:16px;margin-top:6px}.level-card span{display:block;color:#7483a0;font-size:12px;line-height:1.35;margin-top:4px}
-.theme-row{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 4px}.theme-btn{border:1px solid #e4eaf7;background:#fff;color:#4b6088;border-radius:999px;padding:9px 12px;font-weight:850}.theme-btn.active{background:#eef3ff;border-color:#cfdaff;color:#3f5cc5}
-.text-mode-box{margin-top:14px}.text-mode-box textarea{min-height:210px}
-.kids-shell{padding:22px}
-.kids-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}.kids-back{border:0;background:#eef3ff;color:#405cc4;border-radius:14px;padding:10px 13px;font-weight:900}.stars{background:#fff8dd;color:#a87000;border:1px solid #ffe7a7;border-radius:999px;padding:9px 12px;font-weight:950}
-.kids-card{background:linear-gradient(155deg,#ffffff,#f9fbff 65%,#fff9ef);border:1px solid #e9eef8;border-radius:34px;padding:28px;box-shadow:0 24px 58px rgba(42,69,117,.11);text-align:center}
-.kids-label{display:inline-flex;background:#eef3ff;color:#4b63bd;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:900}
-.kids-title{font-size:clamp(28px,4vw,48px);margin:12px 0 5px}.kids-prompt{color:#7584a0;margin-bottom:18px}
-.kids-stage{min-height:285px;border-radius:30px;background:radial-gradient(circle at 50% 24%,#fff 0 8%,transparent 9%),linear-gradient(145deg,#e9f7ff,#f4edff 58%,#fff5df);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:22px;position:relative;overflow:hidden}
-.kids-emoji{font-size:82px;filter:drop-shadow(0 12px 16px rgba(43,72,119,.12));line-height:1}.kids-main{direction:ltr;font-size:clamp(52px,9vw,96px);font-weight:1000;color:#173d8f;line-height:1;margin-top:12px;letter-spacing:-2px}.kids-main.sentence{font-size:clamp(30px,5vw,52px);line-height:1.2;max-width:850px}.kids-sub{direction:ltr;color:#58709c;font-size:22px;font-weight:800;margin-top:10px}.kids-feedback{margin-top:15px;min-height:48px;border-radius:18px;padding:13px 15px;background:#f3f6ff;color:#425a86;font-weight:850}.kids-feedback.good{background:#ebfbf2;color:#118055}.kids-feedback.try{background:#fff7e8;color:#9a6500}
-.kids-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:16px}.kids-action{border:0;border-radius:17px;padding:13px 18px;font-weight:950;color:#fff;background:linear-gradient(135deg,#4967ff,#654bf0)}.kids-action.pink{background:linear-gradient(135deg,#ff5577,#ff726f)}.kids-action.soft{background:#eef3ff;color:#4260bf}.kids-action.next{background:linear-gradient(135deg,#31bc72,#1da85f)}
-.choice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}.choice{border:1px solid #e6ecf7;background:#fff;border-radius:20px;padding:14px;font-size:35px;min-height:90px}.choice.correct{border-color:#71d8a4;background:#edfbf3}.choice.wrong{border-color:#ffb0bf;background:#fff0f3}
-.progress-dots{display:flex;justify-content:center;gap:7px;margin-top:16px}.dot-progress{width:10px;height:10px;border-radius:50%;background:#dfe5f1}.dot-progress.done{background:#5f75f5}.dot-progress.current{background:#ffb433;box-shadow:0 0 0 4px #fff0c8}
-@media(max-width:800px){.mode-grid{grid-template-columns:1fr}.level-grid{grid-template-columns:1fr 1fr}.home-main{padding:24px}.kids-card{padding:18px}.choice-grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:520px){.level-grid{grid-template-columns:1fr}.kids-stage{min-height:250px}.kids-emoji{font-size:68px}.kids-actions button{flex:1}.choice{font-size:30px}}
-
-
-.lesson-head-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.lesson-back{border:0;background:#eef3ff;color:#405cc4;border-radius:14px;padding:10px 14px;font-weight:900}
-.lesson-back:hover{background:#e4ebff}
-@media(max-width:620px){.lesson-head-actions{width:100%;justify-content:space-between}.lesson-back{padding:9px 12px}}
-.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
-.tts-settings{margin:10px 0 13px;border:1px solid #edf1fa;border-radius:18px;background:#f8faff;overflow:hidden}
-.tts-settings summary{cursor:pointer;list-style:none;padding:12px 14px;font-weight:900;color:#536584;font-size:13px;display:flex;align-items:center;justify-content:space-between}
-.tts-settings summary::-webkit-details-marker{display:none}.tts-settings summary:after{content:'⌄';font-size:18px;color:#8694ae}.tts-settings[open] summary:after{content:'⌃'}
-.tts-settings .control-group{margin:0;border:0;border-top:1px solid #edf1fa;border-radius:0;background:transparent}
-.comprehension-quiz{margin-top:14px;display:grid;gap:12px}
-.comp-q{background:#f8faff;border:1px solid #e8eef9;border-radius:18px;padding:14px}.comp-q strong{display:block;margin-bottom:9px;color:#173d8f}
-.comp-options{display:flex;gap:8px;flex-wrap:wrap}.comp-option{border:1px solid #dfe6f5;background:#fff;color:#39517c;border-radius:13px;padding:9px 12px;font-weight:850}.comp-option.good{background:#ebfbf2;border-color:#8bdfb4;color:#0e7d54}.comp-option.bad-answer{background:#fff0f3;border-color:#ffb8c5;color:#b93450}
-.comp-score{background:#fff8df;color:#946300;border-radius:15px;padding:11px 13px;font-weight:900;text-align:center}
-.kids-finish{animation:popin .25s ease}@keyframes popin{from{transform:scale(.96);opacity:.5}to{transform:scale(1);opacity:1}}
-@media(max-width:620px){.comp-options{display:grid;grid-template-columns:1fr}.comp-option{width:100%}}
+.reader-card,.coach-card,.panel{background:#fff;border:1px solid var(--line);border-radius:28px;box-shadow:0 16px 36px rgba(40,65,112,.07)}
+.reader-card{padding:22px}
+.story-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;margin-bottom:12px}
+.story-head h3{font-family:"Fredoka","Rubik";font-size:26px;margin:0}.story-head span{font-size:12px;color:var(--muted);font-weight:700}
+.reader{direction:ltr;text-align:left;font-size:clamp(24px,2.5vw,38px);line-height:1.75;color:#193c7d;background:linear-gradient(180deg,#fcfdff,#f8faff);border:1px solid #e7edf8;border-radius:24px;padding:22px;min-height:250px}
+.token{border-radius:8px;padding:1px 2px;transition:.12s}.token.bad{background:#ffdbe2;color:#b92e49}.token.active{background:#fff0a9;box-shadow:0 0 0 3px rgba(255,214,82,.22)}
+.status{margin-top:13px;padding:14px 16px;border-radius:17px;background:#f2f6ff;color:#415983;font-weight:700;text-align:center}.status.listening{background:#eafbf1;color:#0d7955;border:1px solid #a9e5c8}
+.pulse{display:inline-block;width:9px;height:9px;border-radius:50%;background:#ff617c;margin-left:8px;animation:pulse 1s infinite}@keyframes pulse{50%{transform:scale(1.45);opacity:.35}}
+.live{direction:ltr;text-align:left;font-size:14px;color:#71809c;margin-top:8px;min-height:20px;max-height:42px;overflow:hidden}
+.coach-card{padding:16px;align-self:start;position:sticky;top:14px}
+.coach-intro{display:flex;gap:10px;align-items:center;padding:11px;background:linear-gradient(135deg,#f5f9ff,#fff8ee);border-radius:20px;margin-bottom:12px}
+.coach-avatar{width:44px;height:44px;border-radius:14px;background:linear-gradient(145deg,#d8ecff,#eee6ff);display:grid;place-items:center}.coach-avatar svg{width:24px;height:24px;fill:none;stroke:#4e67d7;stroke-width:2.2}
+.coach-intro strong{display:block}.coach-intro small{display:block;color:var(--muted);font-size:12px;margin-top:3px}
+.big-action{width:100%;border:0;border-radius:17px;padding:14px 16px;color:#fff;font-weight:800;font-size:16px;margin-bottom:9px}.listen-btn{background:linear-gradient(135deg,var(--blue),var(--blue-2))}.read-btn{background:linear-gradient(135deg,#ff627b,#ff7c72)}.stop-btn{background:#263247}
+.settings{border:1px solid #ebeff7;border-radius:17px;background:#f9fbff;margin:10px 0;overflow:hidden}.settings summary{list-style:none;cursor:pointer;padding:11px 12px;color:#60708f;font-size:12px;font-weight:800}.settings summary::-webkit-details-marker{display:none}
+.setting-body{padding:0 12px 12px}.field-label{font-size:11px;color:#7a88a2;font-weight:800;display:block;margin:8px 0 6px}
+.voice-row{display:grid;grid-template-columns:minmax(0,1fr) 42px;gap:7px}.voice-row select{border:1px solid #dbe3f1;background:#fff;border-radius:12px;padding:9px;color:#334b79;min-width:0}.preview-btn{border:0;border-radius:12px;background:#eaf0ff;color:#3f5fd0;font-weight:800}
+.speed-row{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.speed-row button{border:0;border-radius:11px;background:#edf2fa;color:#546482;padding:9px 4px;font-size:12px;font-weight:800}.speed-row button.active{background:linear-gradient(135deg,var(--blue),var(--blue-2));color:#fff}
+.result-strip{display:grid;grid-template-columns:1.25fr repeat(3,.75fr);gap:10px;margin-top:16px}.result-main,.metric{border-radius:19px;padding:14px;background:#f7f9ff}.result-main{display:flex;align-items:center;gap:10px;background:#f4fff7}.result-main strong{display:block;color:#198d5a;font-size:18px}.result-main small{color:var(--muted)}.metric{text-align:center}.metric b{display:block;font-size:26px}.metric small{color:var(--muted);font-size:12px}.metric.green{background:#ecfaf2}.metric.red{background:#fff0f3}.metric.blue{background:#eef3ff}
+.bottom-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}.panel{padding:19px}.panel h3{margin:0 0 7px;font-size:21px}.panel p{margin:0 0 12px;color:var(--muted);line-height:1.5}
+.word-list{display:flex;gap:8px;flex-wrap:wrap}.word-pill{border:0;background:#fff0f3;color:#bd3851;border-radius:13px;padding:9px 11px;font-weight:800}
+.quiz{display:grid;gap:10px;margin-top:10px}.q{background:#f8faff;border:1px solid #e8eef8;border-radius:16px;padding:12px}.q strong{display:block;margin-bottom:8px}.q-options{display:flex;gap:7px;flex-wrap:wrap}.q-option{border:1px solid #dfe6f3;background:#fff;color:#3e577f;border-radius:11px;padding:8px 10px;font-weight:700}.q-option.good{background:#ecfaf2;border-color:#8cdeb4;color:#0e7c54}.q-option.bad{background:#fff0f3;border-color:#ffb7c4;color:#b63550}
+.score{background:#fff7dd;color:#916100;border-radius:13px;padding:9px 11px;font-weight:800;text-align:center}
+.mature-note{font-size:12px;color:#7d8aa3;margin-top:8px}
+body[data-mode="teen"]{--bg:#f5f7fb}
+body[data-mode="teen"] .junior-stage{background:linear-gradient(145deg,#eef3fb,#f6f7fb)}
+body[data-mode="teen"] .emoji{font-size:54px}
+body[data-mode="teen"] .junior-card{background:linear-gradient(150deg,#fff,#f8faff)}
+@media(max-width:980px){.hero{grid-template-columns:1fr}.hero-visual{min-height:350px}.levels{grid-template-columns:1fr 1fr}.lesson-grid{grid-template-columns:1fr}.coach-card{position:static}.bottom-grid{grid-template-columns:1fr}.result-strip{grid-template-columns:1fr 1fr}.result-main{grid-column:1/-1}}
+@media(max-width:650px){.app{padding:12px 10px 34px}.topbar{margin-bottom:16px}.brand-sub{display:none}.hero{padding:24px}.hero h1{font-size:48px}.hero p{font-size:16px}.hero-visual{min-height:300px}.character{width:170px;height:215px;right:10px}.hero-desk{left:10px;right:10px}.home-section,.subview{padding:22px}.route-grid,.levels{grid-template-columns:1fr}.lesson{padding:12px}.lesson-stepper{grid-template-columns:1fr 1fr}.story-head{display:block}.reader{font-size:22px;padding:16px}.result-strip{grid-template-columns:repeat(3,1fr)}.result-main{grid-column:1/-1}.metric{padding:10px 5px}.junior-card{padding:16px}.junior-stage{min-height:260px}.choice-grid{grid-template-columns:repeat(3,1fr)}.top-actions{display:none}}
 </style>
 </head>
-<body>
+<body data-mode="home">
 <main class="app">
-  
-  <section class="hero-grid">
-    <div class="logo-lockup">
-      <span class="logo-star star-a">★</span>
-      <span class="logo-star star-b">★</span>
-      <div class="logo-primary">Read</div>
-      <div class="logo-secondary">in English</div>
-      <div class="logo-tagline">Listen <b>•</b> Read <b>•</b> Practice <b>•</b> Improve</div>
-    </div>
-    <div class="hero-features">
-      <div class="hero-feature"><div class="hero-icon blue">🔊</div><strong>Listen<br>to the text</strong></div>
-      <div class="hero-feature"><div class="hero-icon orange">🎤</div><strong>Read<br>out loud</strong></div>
-      <div class="hero-feature"><div class="hero-icon green">★</div><strong>Get instant<br>feedback</strong></div>
-    </div>
-  </section>
-
-  <section id="setup" class="shell setup-grid">
-    <div class="home-main">
-      <span class="eyebrow">✨ בוחרים איך ללמוד</span>
-      <h2 class="home-title">איך נלמד היום?</h2>
-      <p class="home-lead">אפשר להתחיל ממש מהאותיות והמילים הראשונות — או להדביק טקסט מבית הספר ולהתאמן עליו.</p>
-
-      <div id="modeChooser" class="mode-grid">
-        <button id="kidsModeBtn" class="mode-card kids">
-          <span class="mode-icon">🌈</span>
-          <strong>מסלול קריאה לילדים</strong>
-          <small>אותיות → מילים → משפטים → סיפורים קצרים. מתאים גם לילדים שמתחילים מאפס.</small>
-        </button>
-        <button id="textModeBtn" class="mode-card school">
-          <span class="mode-icon">📖</span>
-          <strong>יש לי טקסט</strong>
-          <small>מדביקים טקסט מבית הספר, שומעים אותו, קוראים בקול ומקבלים משוב.</small>
-        </button>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M4 5.5h10a3 3 0 0 1 3 3V19H7a3 3 0 0 1-3-3z"/><path d="M17 8.5h3v8.5a2 2 0 0 1-2 2h-1"/><path d="M8 10h5M8 13h5"/></svg>
       </div>
-
-      <div id="kidsChooser" class="subscreen hidden">
-        <div class="subscreen-head"><h3>בחרו רמה</h3><button class="back-mini" id="backModes1">← חזרה</button></div>
-        <div class="level-grid">
-          <button class="level-card" data-level="1"><span class="level-emoji">🔤</span><b>רמה 1 · אותיות וצלילים</b><span>מכירים אות, שומעים את הצליל ומחברים למילה.</span></button>
-          <button class="level-card" data-level="2"><span class="level-emoji">🐣</span><b>רמה 2 · מילים ראשונות</b><span>תמונה + מילה + הקראה + חזרה בקול.</span></button>
-          <button class="level-card" data-level="3"><span class="level-emoji">⭐</span><b>רמה 3 · קוראים מילים</b><span>מילים נפוצות בלי להסתמך רק על תמונה.</span></button>
-          <button class="level-card" data-level="4"><span class="level-emoji">🚀</span><b>רמה 4 · משפטים קצרים</b><span>קוראים משפט קצר ומקבלים משוב.</span></button>
-          <button class="level-card" data-level="5"><span class="level-emoji">📘</span><b>רמה 5 · סיפור קצר</b><span>2–4 משפטים, הקראה, קריאה ותרגול מילים.</span></button>
-          <button class="level-card" data-level="6"><span class="level-emoji">🏆</span><b>רמה 6 · טקסט מלא</b><span>טקסטים מבית הספר, מבחנים ומיפוי.</span></button>
-        </div>
-        <div class="theme-row" id="themeRow">
-          <button class="theme-btn active" data-theme="animals">🐾 חיות</button>
-          <button class="theme-btn" data-theme="space">🚀 חלל</button>
-          <button class="theme-btn" data-theme="games">🎮 גיימינג</button>
-          <button class="theme-btn" data-theme="everyday">🌈 יום־יום</button>
-        </div>
-      </div>
-
-      <div id="textChooser" class="subscreen hidden">
-        <div class="subscreen-head"><h3>הדביקו טקסט באנגלית</h3><button class="back-mini" id="backModes2">← חזרה</button></div>
-        <div class="text-mode-box">
-          <label class="sr-only" for="input">טקסט באנגלית לתרגול</label>
-          <textarea id="input">Last Saturday, Tom went to the beach with his family. They played in the sand and swam in the sea. Tom found a beautiful shell and showed it to his sister.</textarea>
-          <div class="setup-actions"><button id="start" class="primary">מתחילים לקרוא ←</button></div>
-        </div>
+      <div>
+        <div class="brand-name">Read <span>English</span></div>
+        <div class="brand-sub">Reading Lab · Listen · Read · Understand</div>
       </div>
     </div>
-    <aside class="setup-side">
-      <div class="mascot">
-        <div class="mascot-visual">
-          <svg viewBox="0 0 220 220" aria-hidden="true">
-            <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4d7cff"/><stop offset="1" stop-color="#6448f4"/></linearGradient></defs>
-            <circle cx="110" cy="106" r="72" fill="#ffd7b8"/>
-            <path d="M45 91c8-51 118-74 133-3-13-19-36-30-57-24-21 6-40 3-56-5-3 12-8 22-20 32z" fill="#6b3c24"/>
-            <path d="M39 108c0-48 26-80 71-80s74 31 74 82" fill="none" stroke="url(#g)" stroke-width="18" stroke-linecap="round"/>
-            <rect x="28" y="93" width="24" height="50" rx="12" fill="#315cff"/><rect x="168" y="93" width="24" height="50" rx="12" fill="#315cff"/>
-            <circle cx="82" cy="108" r="6" fill="#2b1b17"/><circle cx="139" cy="108" r="6" fill="#2b1b17"/>
-            <path d="M92 137q18 14 37 0" fill="none" stroke="#c86b5a" stroke-width="5" stroke-linecap="round"/>
-            <path d="M57 175q53-34 106 0v36H57z" fill="url(#g)"/>
-            <path d="M73 188h74v22H73z" fill="#fff" opacity=".95"/><path d="M110 188v22" stroke="#d9e3ff" stroke-width="3"/>
+    <div class="top-actions"><button id="homeBtn" class="ghost-btn">מסך הבית</button></div>
+  </header>
+
+  <section id="home" class="shell">
+    <div class="hero">
+      <div>
+        <span class="kicker">מסלול קריאה שמתקדם עם הילד</span>
+        <h1>מתחילים בצליל.<br>מגיעים ל<span class="accent">טקסט שלם.</span></h1>
+        <p>חוויית קריאה אחת שמתאימה לילדים ולנוער: מהיכרות עם אותיות ומילים, דרך משפטים וסיפורים, ועד טקסטים מבית הספר עם הקראה, קריאה בקול, תרגול והבנה.</p>
+        <div class="hero-cta">
+          <button id="guidedCta" class="primary-btn">בחר רמה והתחל</button>
+          <button id="textCta" class="secondary-btn">יש לי טקסט מבית הספר</button>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="float-card one">● Listen</div>
+        <div class="float-card two">● Read aloud</div>
+        <div class="character">
+          <svg viewBox="0 0 220 275">
+            <defs><linearGradient id="hood" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4e8cff"/><stop offset="1" stop-color="#5a48ef"/></linearGradient></defs>
+            <circle cx="112" cy="92" r="54" fill="#ffd8bd"/>
+            <path d="M56 88c5-42 38-68 79-60 26 5 44 23 50 47-17-15-40-24-62-18-24 7-42 4-56-5-3 15-7 26-11 36z" fill="#6f422a"/>
+            <path d="M44 102c0-55 28-87 68-87s70 32 70 87" fill="none" stroke="url(#hood)" stroke-width="18" stroke-linecap="round"/>
+            <rect x="34" y="89" width="25" height="55" rx="12" fill="#3969f2"/><rect x="169" y="89" width="25" height="55" rx="12" fill="#3969f2"/>
+            <circle cx="91" cy="92" r="6" fill="#2e1e18"/><circle cx="136" cy="92" r="6" fill="#2e1e18"/>
+            <path d="M98 119q16 13 31 0" fill="none" stroke="#cb7566" stroke-width="5" stroke-linecap="round"/>
+            <path d="M52 183q59-45 120 0v80H52z" fill="url(#hood)"/>
+            <path d="M92 193l16 17 17-19 14 16-12 18H86l-11-18z" fill="#ffd45d"/>
           </svg>
         </div>
-        <h3>From A to Story ✨</h3>
-        <p>מתחילים איפה שנוח לילד ומתקדמים בקצב שלו.</p>
-      </div>
-    </aside>
-  </section>
-
-  <section id="kids" class="shell kids-shell hidden">
-    <div class="kids-top">
-      <button id="kidsBack" class="kids-back">← בחירת רמה</button>
-      <div class="stars">⭐ <span id="starCount">0</span> כוכבים</div>
-    </div>
-    <div class="kids-card">
-      <span id="kidsLabel" class="kids-label">רמה 1</span>
-      <h2 id="kidsTitle" class="kids-title">אותיות וצלילים</h2>
-      <div id="kidsPrompt" class="kids-prompt">שומעים, מזהים ומתקדמים.</div>
-      <div class="kids-stage">
-        <div id="kidsEmoji" class="kids-emoji">🍎</div>
-        <div id="kidsMain" class="kids-main">A a</div>
-        <div id="kidsSub" class="kids-sub">Apple</div>
-      </div>
-      <div id="choiceGrid" class="choice-grid hidden"></div>
-      <div id="kidsFeedback" class="kids-feedback">לחצו על 🔊 כדי לשמוע.</div>
-      <div class="kids-actions">
-        <button id="kidsHear" class="kids-action">🔊 שמע</button>
-        <button id="kidsRead" class="kids-action pink hidden">🎤 אני קורא</button>
-        <button id="kidsNext" class="kids-action next">הבא ➜</button>
-      </div>
-      <div id="progressDots" class="progress-dots"></div>
-    </div>
-  </section>
-
-  <section id="learn" class="shell hidden">
-    <div class="learn-wrap">
-      <div class="lesson-progress">
-        <div class="lesson-step active" id="stepListen"><span class="num">1</span><span>שומעים את הטקסט</span></div>
-        <div class="lesson-step" id="stepRead"><span class="num">2</span><span>קוראים בקול</span></div>
-        <div class="lesson-step" id="stepPractice"><span class="num">3</span><span>מתרגלים ומשתפרים</span></div>
-      </div>
-      <div class="lesson-head">
-        <div class="lesson-title"><small>הטקסט שלך</small><h2>קוראים באנגלית</h2></div>
-        <div class="lesson-head-actions">
-          <button id="lessonBack" class="lesson-back">← חזרה</button>
-          <div class="lesson-pill">1 / 1 · Reading practice</div>
+        <div class="hero-desk">
+          <div class="fake-title">A Day at the Beach</div>
+          <div class="fake-line"></div><div class="fake-line"></div>
+          <div class="fake-actions"><div class="fake-chip blue"></div><div class="fake-chip coral"></div></div>
         </div>
       </div>
+    </div>
 
-      <div class="lesson-grid">
-        <div class="reading-card">
-          <div id="text" class="text"></div>
-          <div id="status" class="status">אפשר קודם לשמוע את הטקסט, ואז לקרוא אותו בעצמך.</div>
+    <div class="home-section" id="guidedArea">
+      <div class="section-head">
+        <div><h2>בחרו מסלול</h2><p>לא לפי גיל — לפי מה שהילד יודע לעשות היום.</p></div>
+      </div>
+      <div class="route-grid">
+        <button id="guidedRoute" class="route-card guided">
+          <div class="route-icon"><svg viewBox="0 0 24 24"><path d="M5 5h5v5H5zM14 5h5v5h-5zM5 14h5v5H5zM14 14h5v5h-5z"/></svg></div>
+          <strong>מסלול מודרך</strong>
+          <small>6 רמות ברורות: אותיות, מילים, משפטים, סיפורים וטקסטים מלאים.</small>
+        </button>
+        <button id="textRoute" class="route-card text">
+          <div class="route-icon"><svg viewBox="0 0 24 24"><path d="M5 4h10l4 4v12H5z"/><path d="M15 4v4h4M8 12h8M8 16h8"/></svg></div>
+          <strong>יש לי טקסט</strong>
+          <small>מדביקים טקסט מבית הספר ונכנסים ישר להקראה, קריאה בקול, משוב והבנה.</small>
+        </button>
+      </div>
+
+      <div id="levelsArea" class="hidden">
+        <div class="theme-row">
+          <button class="theme-btn active" data-theme="animals">חיות</button>
+          <button class="theme-btn" data-theme="space">חלל</button>
+          <button class="theme-btn" data-theme="games">גיימינג</button>
+          <button class="theme-btn" data-theme="everyday">יום־יום</button>
+        </div>
+        <div class="levels">
+          <article class="level-card"><div class="level-num">1</div><h3>צלילים ואותיות</h3><p>מזהים אות, שומעים אותה בתוך מילה ומחברים לתמונה.</p><button data-level="1">התחל</button></article>
+          <article class="level-card"><div class="level-num">2</div><h3>מילים ראשונות</h3><p>תמונה + מילה + הקראה + קריאה בקול.</p><button data-level="2">התחל</button></article>
+          <article class="level-card"><div class="level-num">3</div><h3>קוראים מילים</h3><p>פחות עזרה חזותית, יותר קריאה עצמאית.</p><button data-level="3">התחל</button></article>
+          <article class="level-card"><div class="level-num">4</div><h3>משפטים קצרים</h3><p>קוראים משפטים שלמים ומקבלים משוב על התאמה לטקסט.</p><button data-level="4">התחל</button></article>
+          <article class="level-card"><div class="level-num">5</div><h3>סיפור קצר</h3><p>קוראים קטע קצר, מתרגלים מילים ועונים על שאלות הבנה.</p><button data-level="5">התחל</button></article>
+          <article class="level-card"><div class="level-num">6</div><h3>טקסטים מבית הספר</h3><p>מיפוי, שיעורי בית וטקסטים אמיתיים מהכיתה.</p><button data-level="6">התחל</button></article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="textInputView" class="shell subview hidden">
+    <div class="back-row"><div><h2 style="margin:0">הדביקו טקסט באנגלית</h2><p style="margin:5px 0 0;color:var(--muted)">נשמור על הטקסט כמו שהוא ונבנה סביבו תרגול.</p></div><button class="back-btn" data-back-home>חזרה</button></div>
+    <label class="sr-only" for="textInput">טקסט באנגלית</label>
+    <textarea id="textInput" class="text-input">Last Saturday, Tom went to the beach with his family. They played in the sand and swam in the sea. Tom found a beautiful shell and showed it to his sister.</textarea>
+    <div class="input-actions"><button id="startTextLesson" class="primary-btn">התחל ללמוד את הטקסט</button></div>
+  </section>
+
+  <section id="juniorView" class="shell junior-wrap hidden">
+    <div class="junior-head"><button id="juniorBack" class="back-btn">חזרה לרמות</button><div class="progress-pill">כוכבים: <span id="starCount">0</span></div></div>
+    <div class="junior-card">
+      <div class="junior-meta"><span id="juniorLevel" class="level-badge">רמה 1</span><span id="juniorProgressText" class="progress-text">1 מתוך 5</span></div>
+      <div class="junior-stage">
+        <div id="juniorEmoji" class="emoji">☀️</div>
+        <div id="juniorMain" class="junior-main">S s</div>
+        <div id="juniorSub" class="junior-sub">Sun</div>
+      </div>
+      <div id="choiceGrid" class="choice-grid hidden"></div>
+      <div id="juniorFeedback" class="junior-feedback">לחצו על שמע והקשיבו פעם אחת.</div>
+      <div class="junior-actions">
+        <button id="juniorHear" class="action-btn">שמע</button>
+        <button id="juniorRead" class="action-btn coral hidden">אני קורא</button>
+        <button id="juniorNext" class="action-btn mint">הבא</button>
+      </div>
+      <div class="progress-bar"><span id="juniorProgressBar" style="width:20%"></span></div>
+    </div>
+  </section>
+
+  <section id="lessonView" class="shell lesson hidden">
+    <div class="lesson-top">
+      <div class="lesson-title"><small id="lessonSourceLabel">Reading practice</small><h2 id="lessonTitle">Read in English</h2></div>
+      <button id="lessonBack" class="back-btn">חזרה</button>
+    </div>
+
+    <div class="lesson-stepper">
+      <div class="step active" id="stepListen"><span class="n">1</span><span>שומעים</span></div>
+      <div class="step" id="stepRead"><span class="n">2</span><span>קוראים</span></div>
+      <div class="step" id="stepPractice"><span class="n">3</span><span>מתרגלים</span></div>
+      <div class="step" id="stepUnderstand"><span class="n">4</span><span>מבינים</span></div>
+    </div>
+
+    <div class="lesson-grid">
+      <div>
+        <div class="reader-card">
+          <div class="story-head"><div><h3 id="storyTitle">A Day at the Beach</h3><span id="storyNote">הקשיבו פעם אחת, אחר כך קראו בקול.</span></div></div>
+          <div id="reader" class="reader" lang="en"></div>
+          <div id="status" class="status">מוכנים? אפשר להתחיל בהקראה.</div>
           <div id="live" class="live"></div>
         </div>
 
-        <aside class="control-card">
-          <div class="guide-card">
-            <div class="guide-avatar">🎧</div>
-            <div><strong>Reading Coach</strong><small>קודם מקשיבים פעם אחת, אחר כך קוראים בקול.</small></div>
+        <div id="results" class="result-strip hidden">
+          <div class="result-main"><div style="font-size:32px">✓</div><div><strong>כל הכבוד</strong><small>סיימת קריאה וקיבלת משוב.</small></div></div>
+          <div class="metric green"><b id="correctCount">0</b><small>זוהו נכון</small></div>
+          <div class="metric red"><b id="practiceCount">0</b><small>לתרגול</small></div>
+          <div class="metric blue"><b id="matchCount">0%</b><small>התאמה לטקסט</small></div>
+        </div>
+
+        <div class="bottom-grid">
+          <div id="practicePanel" class="panel hidden">
+            <h3>מילים לתרגול</h3><p>לחצו על מילה כדי לשמוע אותה ולנסות שוב.</p><div id="wordList" class="word-list"></div>
           </div>
-
-          <div class="action-label"><span>שלב 1 · הקשבה</span><span>אפשר לעצור בכל רגע</span></div>
-          <button id="speak" class="big-action">🔊 הקרא לי</button>
-
-          <details class="tts-settings">
-            <summary>⚙️ הגדרות הקראה <span class="us-chip">🇺🇸 US</span></summary>
-            <div class="control-group">
-              <label class="control-label" for="voice">🎙️ קול — US English</label>
-              <div class="voice-row"><select id="voice"><option>טוען קולות US...</option></select><button id="voiceTest" type="button" aria-label="בדיקת קול">▶</button></div>
-            </div>
-            <div class="control-group">
-              <span class="control-label">⏱️ קצב הקראה</span>
-              <div class="speed"><button data-rate=".72">🐢 לאט</button><button data-rate=".90" class="active">▶ רגיל</button><button data-rate="1.08">⚡ מהר</button></div>
-            </div>
-          </details>
-
-          <div class="action-label"><span>שלב 2 · עכשיו אתה</span><span>המיקרופון מקשיב</span></div>
-          <button id="read" class="big-action">🎤 עכשיו אני קורא</button>
-          <button id="restart" class="secondary">↻ התחל מחדש</button>
-        </aside>
-      </div>
-
-      <div id="resultStrip" class="result-strip hidden">
-        <div class="result-main"><div class="trophy">🏆</div><div><strong>כל הכבוד!</strong><small>סיימת קריאה וקיבלת משוב.</small></div></div>
-        <div class="stat green"><b id="correctCount">0</b><small>מילים נכונות</small></div>
-        <div class="stat red"><b id="practiceCount">0</b><small>לתרגול</small></div>
-        <div class="stat blue"><b id="accuracyCount">0%</b><small>התאמה לטקסט</small></div>
-      </div>
-
-      <div class="lower">
-        <div id="practice" class="practice-card hidden wordbox"><h3>מילים שכדאי לתרגל</h3><div id="words"></div></div>
-        <div class="understand-card">
-          <h3>🧠 הבנתי את הטקסט</h3>
-          <p>אחרי הקריאה נפתחות 3 שאלות קצרות מתוך הטקסט עצמו.</p>
-          <button id="buildQuiz" class="newtext">פתח שאלות הבנה</button>
-          <div id="comprehensionQuiz" class="comprehension-quiz hidden"></div>
-          <button id="newTextBtn" class="newtext" style="margin-top:12px">📄 טקסט חדש</button>
+          <div class="panel">
+            <h3>בדיקת הבנה</h3><p id="quizIntro">אחרי הקריאה נפתחות שאלות קצרות על התוכן.</p>
+            <button id="quizBtn" class="secondary-btn">פתח שאלות</button>
+            <div id="quiz" class="quiz hidden"></div>
+          </div>
         </div>
       </div>
+
+      <aside class="coach-card">
+        <div class="coach-intro">
+          <div class="coach-avatar"><svg viewBox="0 0 24 24"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><path d="M4 13h3v6H5a1 1 0 0 1-1-1zM20 13h-3v6h2a1 1 0 0 0 1-1z"/><path d="M17 19c-1 2-3 2-5 2"/></svg></div>
+          <div><strong>Reading Coach</strong><small>משימה אחת בכל פעם. בלי עומס.</small></div>
+        </div>
+
+        <button id="listenBtn" class="big-action listen-btn">הקרא לי</button>
+        <button id="readBtn" class="big-action read-btn">עכשיו אני קורא</button>
+        <button id="stopReadBtn" class="big-action stop-btn hidden">סיים קריאה</button>
+        <button id="retryBtn" class="ghost-btn hidden" style="width:100%;margin-bottom:8px">קרא שוב</button>
+
+        <details class="settings">
+          <summary>הגדרות הקראה</summary>
+          <div class="setting-body">
+            <label class="field-label" for="voiceSelect">קול אמריקאי</label>
+            <div class="voice-row"><select id="voiceSelect"><option>טוען קולות...</option></select><button id="voicePreview" class="preview-btn" aria-label="בדיקת קול">▶</button></div>
+            <span class="field-label">מהירות</span>
+            <div class="speed-row"><button data-rate=".72">לאט</button><button class="active" data-rate=".90">רגיל</button><button data-rate="1.08">מהר</button></div>
+          </div>
+        </details>
+        <div class="mature-note">המשוב מודד התאמה בין הטקסט למה שהדפדפן זיהה — לא ציון הגייה מקצועי.</div>
+      </aside>
     </div>
   </section>
 </main>
 
 <script>
-let original='',rec=null,isListening=false,isSpeaking=false,transcript='',speechRate=.90,englishVoices=[],lessonSource='text',textChooserSource='modes';
-let currentLevel=1,currentTheme='animals',kidsIndex=0,stars=0,kidsReading=false,kidsComplete=false;
-const earnedStars=new Set();
-const $=x=>document.getElementById(x);
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+let currentTheme='animals',currentLevel=1,juniorIndex=0,stars=0,lessonSource='text',speechRate=.90,voices=[],recognition=null,isListening=false,isSpeaking=false,currentText='',currentStory=null,currentTokens=[],lastTranscript='';
+const earned=new Set();
 
-const kidsData={
+const guidedData={
   letters:[
-    {main:'A a',word:'Apple',emoji:'🍎',sound:'A. Apple.',phonics:'/æ/',choices:['🍎','🐶','🚀']},
-    {main:'B b',word:'Ball',emoji:'⚽',sound:'B. Ball.',phonics:'/b/',choices:['⚽','🍌','🐱']},
-    {main:'C c',word:'Cat',emoji:'🐱',sound:'C. Cat.',phonics:'/k/',choices:['🐱','🌞','🚗']},
-    {main:'D d',word:'Dog',emoji:'🐶',sound:'D. Dog.',phonics:'/d/',choices:['🐶','📘','🍎']},
-    {main:'S s',word:'Sun',emoji:'☀️',sound:'S. Sun.',phonics:'/s/',choices:['☀️','🐟','🎮']}
+    {letter:'S s',word:'Sun',emoji:'☀️',audio:'S. Sun.',choices:['☀️','🐱','🚀']},
+    {letter:'A a',word:'Apple',emoji:'🍎',audio:'A. Apple.',choices:['🍎','⚽','🐶']},
+    {letter:'T t',word:'Tiger',emoji:'🐯',audio:'T. Tiger.',choices:['🐯','🌙','📘']},
+    {letter:'P p',word:'Pizza',emoji:'🍕',audio:'P. Pizza.',choices:['🍕','🐟','🏠']},
+    {letter:'M m',word:'Moon',emoji:'🌙',audio:'M. Moon.',choices:['🌙','🦁','🎮']}
   ],
   animals:{
     words:[['cat','🐱'],['dog','🐶'],['fish','🐟'],['bird','🐦'],['lion','🦁']],
     harder:[['rabbit','🐰'],['monkey','🐵'],['turtle','🐢'],['elephant','🐘'],['dolphin','🐬']],
     sentences:['The cat is small.','The dog can run.','I see a yellow bird.','The fish is in the water.','The lion is very strong.'],
-    story:'Tom has a small dog. The dog likes to run in the park. Tom plays with him every afternoon.'
+    story:{title:'Tom and His Dog',text:'Tom has a small dog. The dog likes to run in the park. Tom plays with him every afternoon.',questions:[
+      {q:'Who has a small dog?',opts:['Tom','Maya','The teacher'],a:'Tom'},
+      {q:'Where does the dog like to run?',opts:['In the park','At school','In the sea'],a:'In the park'},
+      {q:'When does Tom play with the dog?',opts:['Every afternoon','Every morning','At night'],a:'Every afternoon'}]}
   },
   space:{
     words:[['sun','☀️'],['moon','🌙'],['star','⭐'],['rocket','🚀'],['planet','🪐']],
     harder:[['astronaut','🧑‍🚀'],['space','🌌'],['planet','🪐'],['rocket','🚀'],['moon','🌙']],
     sentences:['The moon is bright.','I see a big rocket.','The astronaut is in space.','The planet is blue.','The stars shine at night.'],
-    story:'Maya looks at the night sky. She sees the moon and many stars. She dreams about flying in a rocket.'
+    story:{title:'Maya Looks at the Sky',text:'Maya looks at the night sky. She sees the moon and many stars. She dreams about flying in a rocket.',questions:[
+      {q:'What does Maya look at?',opts:['The night sky','The beach','The classroom'],a:'The night sky'},
+      {q:'What does she see?',opts:['The moon and stars','A dog','A train'],a:'The moon and stars'},
+      {q:'What does Maya dream about?',opts:['Flying in a rocket','Swimming','Playing football'],a:'Flying in a rocket'}]}
   },
   games:{
     words:[['game','🎮'],['block','🧱'],['sword','🗡️'],['coin','🪙'],['team','👥']],
     harder:[['player','🎮'],['level','🏆'],['build','🧱'],['winner','🥇'],['team','👥']],
     sentences:['I like this game.','We build a big house.','My team is ready.','I found a gold coin.','The player wins the level.'],
-    story:'Dan likes to play a building game. He makes a big house with his friends. Together they finish the level.'
+    story:{title:'Dan Builds a House',text:'Dan likes to play a building game. He makes a big house with his friends. Together they finish the level.',questions:[
+      {q:'What game does Dan like?',opts:['A building game','A racing game','A football game'],a:'A building game'},
+      {q:'What does he make?',opts:['A big house','A rocket','A school'],a:'A big house'},
+      {q:'Who helps Dan?',opts:['His friends','His dog','His teacher'],a:'His friends'}]}
   },
   everyday:{
     words:[['book','📘'],['home','🏠'],['school','🏫'],['food','🍎'],['friend','🧒']],
     harder:[['family','👨‍👩‍👧'],['school','🏫'],['morning','🌅'],['friend','🧒'],['happy','😊']],
     sentences:['I go to school.','My friend is happy.','We eat lunch together.','I read a book at home.','My family is in the kitchen.'],
-    story:'Noa gets up in the morning. She goes to school and meets her friend. After school they read a book together.'
+    story:{title:'Noa After School',text:'Noa gets up in the morning. She goes to school and meets her friend. After school they read a book together.',questions:[
+      {q:'Where does Noa go?',opts:['To school','To the beach','To space'],a:'To school'},
+      {q:'Who does she meet?',opts:['Her friend','A doctor','A player'],a:'Her friend'},
+      {q:'What do they do after school?',opts:['Read a book','Swim','Build a house'],a:'Read a book'}]}
   }
 };
-function words(s){return s.toLowerCase().replace(/[^a-z' ]/g,' ').split(/\s+/).filter(Boolean)}
-function openTextLesson(textValue,source='text'){
-  original=(textValue||'').trim();if(!original)return;
-  lessonSource=source;
-  $('setup').classList.add('hidden');$('kids').classList.add('hidden');$('learn').classList.remove('hidden');
-  if($('comprehensionQuiz')){$('comprehensionQuiz').classList.add('hidden');$('comprehensionQuiz').innerHTML=''}resetReading();window.scrollTo({top:0,behavior:'smooth'});
-}
-$('start').onclick=()=>openTextLesson($('input').value,textChooserSource==='kids'?'kids':'text');
-function showMode(which){
-  $('modeChooser').classList.toggle('hidden',which!=='modes');
-  $('kidsChooser').classList.toggle('hidden',which!=='kids');
-  $('textChooser').classList.toggle('hidden',which!=='text');
-}
-$('kidsModeBtn').onclick=()=>showMode('kids');
-$('textModeBtn').onclick=()=>{textChooserSource='modes';showMode('text')};
-$('backModes1').onclick=()=>showMode('modes');
-$('backModes2').onclick=()=>showMode(textChooserSource==='kids'?'kids':'modes');
-document.querySelectorAll('.theme-btn').forEach(b=>b.onclick=()=>{currentTheme=b.dataset.theme;document.querySelectorAll('.theme-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active')});
-document.querySelectorAll('.level-card').forEach(b=>b.onclick=()=>{let level=Number(b.dataset.level);if(level===6){textChooserSource='kids';showMode('text');return}startKidsLevel(level)});
-$('kidsBack').onclick=()=>{stopSpeaking(false);$('kids').classList.add('hidden');$('setup').classList.remove('hidden');showMode('kids');window.scrollTo({top:0,behavior:'smooth'})};
 
-function getKidsItems(){
-  if(currentLevel===1)return kidsData.letters;
-  const t=kidsData[currentTheme];
-  if(currentLevel===2)return t.words.map(([word,emoji])=>({word,emoji,main:word,sub:'',speak:word}));
-  if(currentLevel===3)return t.harder.map(([word,emoji])=>({word,emoji:'',main:word,sub:'',speak:word}));
-  if(currentLevel===4)return t.sentences.map(s=>({word:s,emoji:'',main:s,sub:'',speak:s}));
-  return [{word:t.story,emoji:'📘',main:'Short Story',sub:t.story,speak:t.story}];
+function showView(id){
+  ['home','textInputView','juniorView','lessonView'].forEach(v=>$('#'+v).classList.toggle('hidden',v!==id));
+  if(id==='home')document.body.dataset.mode='home';
 }
-function startKidsLevel(level){
-  currentLevel=level;kidsIndex=0;kidsReading=false;kidsComplete=false;
-  $('setup').classList.add('hidden');$('learn').classList.add('hidden');$('kids').classList.remove('hidden');
-  renderKidsItem();window.scrollTo({top:0,behavior:'smooth'});
+function scrollTop(){window.scrollTo({top:0,behavior:'smooth'})}
+$('#homeBtn').onclick=()=>{stopAll();showView('home');scrollTop()};
+$$('[data-back-home]').forEach(b=>b.onclick=()=>{showView('home');scrollTop()});
+$('#guidedCta').onclick=()=>{$('#levelsArea').classList.remove('hidden');$('#guidedArea').scrollIntoView({behavior:'smooth'})};
+$('#guidedRoute').onclick=$('#guidedCta').onclick;
+$('#textCta').onclick=()=>{showView('textInputView');scrollTop()};
+$('#textRoute').onclick=$('#textCta').onclick;
+$$('.theme-btn').forEach(b=>b.onclick=()=>{currentTheme=b.dataset.theme;$$('.theme-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active')});
+$$('.level-card button[data-level]').forEach(b=>b.onclick=()=>startLevel(Number(b.dataset.level)));
+$('#startTextLesson').onclick=()=>openLesson($('#textInput').value.trim(),{source:'text',title:'Reading Practice',questions:null,back:'text'});
+$('#juniorBack').onclick=()=>{showView('home');$('#levelsArea').classList.remove('hidden');scrollTop()};
+
+function startLevel(level){
+  currentLevel=level;
+  document.body.dataset.mode=level>=4?'teen':'junior';
+  if(level===6){showView('textInputView');scrollTop();return}
+  if(level===5){const story=guidedData[currentTheme].story;openLesson(story.text,{source:'guided',title:story.title,questions:story.questions,back:'levels'});return}
+  juniorIndex=0;renderJunior();showView('juniorView');scrollTop()
 }
-function renderKidsItem(){
-  const items=getKidsItems(),item=items[kidsIndex];
-  const names={1:'אותיות וצלילים',2:'מילים ראשונות',3:'קוראים מילים',4:'משפטים קצרים',5:'סיפור קצר'};
-  $('kidsLabel').textContent='רמה '+currentLevel;
-  $('kidsTitle').textContent=names[currentLevel];
-  $('kidsPrompt').textContent=currentLevel===1?'שמעו את האות והצליל, ואז בחרו את התמונה המתאימה.':currentLevel===5?'שומעים סיפור קצר ואז עוברים למסך הקריאה המלא.':'שמעו, קראו בקול, וקבלו משוב.';
-  $('kidsEmoji').textContent=item.emoji||'';
-  $('kidsMain').textContent=item.main;
-  $('kidsMain').classList.toggle('sentence',currentLevel>=4);
-  $('kidsSub').textContent=currentLevel===1?item.word:(item.sub||item.word||'');
-  $('kidsFeedback').className='kids-feedback';
-  $('kidsFeedback').textContent=currentLevel===1?'לחצו על 🔊 ואז בחרו את התמונה הנכונה.':currentLevel===5?'לחצו על “פתח סיפור” כדי לעבור לקריאה מלאה.':'לחצו על 🔊 כדי לשמוע ואז נסו לקרוא.';
-  $('kidsHear').textContent=currentLevel===5?'🔊 שמע סיפור':'🔊 שמע';
-  $('kidsRead').classList.toggle('hidden',currentLevel===1||currentLevel===5);
-  $('kidsRead').textContent='🎤 אני קורא';
-  $('kidsNext').textContent=currentLevel===5?'📖 פתח סיפור':'הבא ➜';
-  kidsComplete=false;
-  $('kidsHear').classList.remove('hidden');
-  if(currentLevel!==1&&currentLevel!==5)$('kidsRead').classList.remove('hidden');
+function juniorItems(){
+  if(currentLevel===1)return guidedData.letters.map(x=>({main:x.letter,sub:x.word,emoji:x.emoji,audio:x.audio,choices:x.choices}));
+  const t=guidedData[currentTheme];
+  if(currentLevel===2)return t.words.map(([w,e])=>({main:w,sub:'',emoji:e,audio:w}));
+  if(currentLevel===3)return t.harder.map(([w,e])=>({main:w,sub:'',emoji:'',audio:w}));
+  if(currentLevel===4)return t.sentences.map(s=>({main:s,sub:'',emoji:'',audio:s}));
+  return[]
+}
+function renderJunior(){
+  const items=juniorItems(),item=items[juniorIndex],names={1:'צלילים ואותיות',2:'מילים ראשונות',3:'קוראים מילים',4:'משפטים קצרים'};
+  $('#juniorLevel').textContent='רמה '+currentLevel+' · '+names[currentLevel];
+  $('#juniorProgressText').textContent=(juniorIndex+1)+' מתוך '+items.length;
+  $('#juniorProgressBar').style.width=((juniorIndex+1)/items.length*100)+'%';
+  $('#juniorEmoji').textContent=item.emoji||'';
+  $('#juniorMain').textContent=item.main;
+  $('#juniorMain').classList.toggle('sentence',currentLevel===4);
+  $('#juniorSub').textContent=item.sub||'';
+  $('#juniorFeedback').className='junior-feedback';
+  $('#juniorFeedback').textContent=currentLevel===1?'שמעו את האות בתוך מילה, ואז בחרו את התמונה המתאימה.':'שמעו פעם אחת ואז נסו לקרוא לבד.';
+  $('#juniorRead').classList.toggle('hidden',currentLevel===1);
+  $('#choiceGrid').classList.toggle('hidden',currentLevel!==1);
+  $('#juniorNext').textContent=juniorIndex===items.length-1?'סיום':'הבא';
   if(currentLevel===1){
-    $('choiceGrid').classList.remove('hidden');
     const choices=[...item.choices].sort(()=>Math.random()-.5);
-    $('choiceGrid').innerHTML=choices.map(x=>'<button class="choice" data-choice="'+x+'">'+x+'</button>').join('');
-    $('choiceGrid').querySelectorAll('.choice').forEach(btn=>btn.onclick=()=>checkLetterChoice(btn,item.emoji));
-  }else $('choiceGrid').classList.add('hidden');
-  $('progressDots').innerHTML=items.map((_,i)=>'<span class="dot-progress '+(i<kidsIndex?'done':i===kidsIndex?'current':'')+'"></span>').join('');
+    $('#choiceGrid').innerHTML=choices.map(c=>'<button class="choice" data-choice="'+c+'">'+c+'</button>').join('');
+    $$('#choiceGrid .choice').forEach(btn=>btn.onclick=()=>checkChoice(btn,item.emoji));
+  }
 }
-function checkLetterChoice(btn,answer){
-  $('choiceGrid').querySelectorAll('.choice').forEach(x=>x.disabled=true);
-  if(btn.dataset.choice===answer){btn.classList.add('correct');awardStar();$('kidsFeedback').className='kids-feedback good';$('kidsFeedback').textContent='מעולה! ⭐';}
-  else{btn.classList.add('wrong');$('kidsFeedback').className='kids-feedback try';$('kidsFeedback').textContent='כמעט. שמע שוב ונסה בפריט הבא.';}
+function checkChoice(btn,answer){
+  $$('#choiceGrid .choice').forEach(x=>x.disabled=true);
+  if(btn.dataset.choice===answer){btn.classList.add('good');awardStar();feedback('מצוין. חיברת בין האות למילה ולתמונה.','good')}
+  else{btn.classList.add('bad');feedback('כמעט. שמע שוב, ובפריט הבא נסה לחבר בין הצליל למילה.','try')}
 }
-function awardStar(){const key=currentTheme+':'+currentLevel+':'+kidsIndex;if(earnedStars.has(key))return false;earnedStars.add(key);stars++;$('starCount').textContent=stars;return true}
-$('kidsHear').onclick=()=>{const item=getKidsItems()[kidsIndex];const audio=currentLevel===1?item.sound.replace(/[\\/]/g,''):item.speak;say(audio,.88);};
-function finishKidsLevel(){
-  kidsComplete=true;$('choiceGrid').classList.add('hidden');$('kidsHear').classList.add('hidden');$('kidsRead').classList.add('hidden');
-  $('kidsEmoji').textContent='🏆';$('kidsMain').textContent='Great job!';$('kidsMain').classList.remove('sentence');$('kidsSub').textContent='סיימת את הרמה';
-  $('kidsFeedback').className='kids-feedback good kids-finish';$('kidsFeedback').textContent='כל הכבוד! אפשר לעבור לרמה הבאה.';
-  $('kidsNext').textContent=currentLevel<5?'לרמה הבאה ➜':'בחירת רמה';
-  $('progressDots').innerHTML=getKidsItems().map(()=>'<span class="dot-progress done"></span>').join('');
+function awardStar(){const k=currentTheme+':'+currentLevel+':'+juniorIndex;if(earned.has(k))return;earned.add(k);stars++;$('#starCount').textContent=stars}
+function feedback(t,kind=''){const el=$('#juniorFeedback');el.className='junior-feedback '+kind;el.textContent=t}
+$('#juniorHear').onclick=()=>{const item=juniorItems()[juniorIndex];say(item.audio,.88)};
+$('#juniorRead').onclick=()=>readJunior();
+$('#juniorNext').onclick=()=>{
+  const items=juniorItems();
+  if(juniorIndex<items.length-1){juniorIndex++;renderJunior();return}
+  finishJunior()
+};
+function finishJunior(){
+  $('#choiceGrid').classList.add('hidden');$('#juniorRead').classList.add('hidden');$('#juniorHear').classList.add('hidden');
+  $('#juniorEmoji').textContent='🏆';$('#juniorMain').textContent='Great job!';$('#juniorMain').classList.remove('sentence');$('#juniorSub').textContent='סיימת את הרמה';
+  feedback('כל הכבוד. אפשר לעבור לרמה הבאה.','good');$('#juniorNext').textContent=currentLevel<4?'לרמה הבאה':'לסיפור קצר';
+  $('#juniorNext').onclick=()=>startLevel(currentLevel+1)
 }
-$('kidsNext').onclick=()=>{const items=getKidsItems();if(kidsComplete){if(currentLevel<5)startKidsLevel(currentLevel+1);else{$('kids').classList.add('hidden');$('setup').classList.remove('hidden');showMode('kids')}return}if(currentLevel===5){openTextLesson(items[0].speak,'kids');return}if(kidsIndex>=items.length-1){finishKidsLevel();return}kidsIndex++;renderKidsItem();};
-$('kidsRead').onclick=()=>practiceKidsSpeech();
+function readJunior(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){feedback('זיהוי דיבור זמין בעיקר ב-Chrome.','try');return}
+  const target=juniorItems()[juniorIndex].audio.toLowerCase().replace(/[^a-z' ]/g,' ').trim(),r=new SR();r.lang='en-US';r.continuous=false;r.interimResults=false;
+  $('#juniorRead').textContent='מקשיב...';
+  r.onresult=e=>{const heard=e.results[0][0].transcript.toLowerCase().replace(/[^a-z' ]/g,' ').trim();const ratio=matchRatio(target,heard);if(ratio>=.65){awardStar();feedback('יפה מאוד. המערכת זיהתה את רוב המילים.','good')}else feedback('כמעט. שמע שוב ונסה פעם נוספת.','try')};
+  r.onerror=()=>feedback('לא הצלחתי לשמוע. נסה שוב.','try');r.onend=()=>$('#juniorRead').textContent='אני קורא';r.start()
+}
 
-function practiceKidsSpeech(){
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){$('kidsFeedback').className='kids-feedback try';$('kidsFeedback').textContent='זיהוי דיבור אינו נתמך כאן. נסו ב-Chrome.';return}
-  const item=getKidsItems()[kidsIndex],target=item.speak.toLowerCase().replace(/[^a-z' ]/g,' ').trim();
-  const r=new SR();r.lang='en-US';r.interimResults=false;r.continuous=false;
-  $('kidsRead').textContent='🎤 מקשיב...';$('kidsFeedback').textContent='קרא עכשיו בקול.';
-  r.onresult=e=>{
-    const heard=e.results[0][0].transcript.toLowerCase().replace(/[^a-z' ]/g,' ').trim();
-    let good=currentLevel<=3?(heard===target||heard.includes(target)||target.includes(heard)):alignSimple(target,heard)>=.6;
-    if(good){awardStar();$('kidsFeedback').className='kids-feedback good';$('kidsFeedback').textContent='מצוין! קראת נכון ⭐';}
-    else{$('kidsFeedback').className='kids-feedback try';$('kidsFeedback').textContent='כמעט. שמע שוב ונסה עוד פעם.';}
-  };
-  r.onend=()=>{$('kidsRead').textContent='🎤 אני קורא'};
-  r.onerror=()=>{$('kidsRead').textContent='🎤 אני קורא';$('kidsFeedback').className='kids-feedback try';$('kidsFeedback').textContent='לא הצלחתי לשמוע. נסה שוב.'};
-  r.start();
+function openLesson(text,meta){
+  if(!text)return;
+  currentText=text;lessonSource=meta.source;currentStory={title:meta.title||'Reading Practice',questions:meta.questions||null,back:meta.back||'text'};
+  document.body.dataset.mode=meta.source==='guided'?'teen':'teen';
+  $('#storyTitle').textContent=currentStory.title;$('#lessonSourceLabel').textContent=meta.source==='guided'?'Guided story':'Your text';$('#lessonTitle').textContent='Reading Lab';
+  $('#quiz').classList.add('hidden');$('#quiz').innerHTML='';$('#results').classList.add('hidden');$('#practicePanel').classList.add('hidden');$('#retryBtn').classList.add('hidden');$('#live').textContent='';
+  resetSteps();renderText();setStatus('מוכנים? התחילו בהקראה פעם אחת.');showView('lessonView');scrollTop()
 }
-function alignSimple(a,b){
-  const aw=a.split(/\s+/),bw=b.split(/\s+/);let hits=0,used=[];
-  aw.forEach(w=>{let i=bw.findIndex((x,idx)=>!used.includes(idx)&&x===w);if(i>=0){hits++;used.push(i)}});
-  return aw.length?hits/aw.length:0;
-}
+$('#lessonBack').onclick=()=>{stopAll();if(currentStory?.back==='levels'){showView('home');$('#levelsArea').classList.remove('hidden')}else showView('textInputView');scrollTop()};
 
 function esc(s){return String(s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]))}
-function render(badIndexes=[]){
-  const bad=new Set(badIndexes),parts=original.split(/(\s+)/);let wi=0;
-  $('text').innerHTML=parts.map(x=>{
-    if(/^\s+$/.test(x))return x;
-    const cleaned=x.toLowerCase().replace(/[^a-z']/g,'');
-    const idx=cleaned?wi++:-1,safe=esc(x);
-    return idx>=0&&bad.has(idx)?'<span class="bad">'+safe+'</span>':safe;
+function tokenize(text){
+  const parts=text.split(/(\s+)/);let char=0,idx=0,tokens=[];
+  for(const p of parts){if(/^\s+$/.test(p)){char+=p.length;continue}const cleaned=p.toLowerCase().replace(/[^a-z']/g,'');if(cleaned){tokens.push({raw:p,clean:cleaned,start:char,index:idx++})}char+=p.length}
+  return tokens
+}
+function renderText(bad=[],active=-1){
+  currentTokens=tokenize(currentText);const badSet=new Set(bad);let wi=0;
+  $('#reader').innerHTML=currentText.split(/(\s+)/).map(p=>{
+    if(/^\s+$/.test(p))return p;
+    const cleaned=p.toLowerCase().replace(/[^a-z']/g,'');if(!cleaned)return esc(p);
+    const i=wi++,cls=['token'];if(badSet.has(i))cls.push('bad');if(i===active)cls.push('active');
+    return '<span class="'+cls.join(' ')+'" data-i="'+i+'">'+esc(p)+'</span>'
   }).join('')
 }
-function voiceScore(v){
-  const n=v.name.toLowerCase();let s=100;
-  if(/jenny.*natural|ava.*natural|aria.*natural|guy.*natural/.test(n))s-=60;
-  else if(/natural/.test(n))s-=50;
-  if(/google us english/.test(n))s-=45;
-  if(/samantha/.test(n))s-=40;
-  if(/premium|enhanced/.test(n))s-=35;
-  if(/microsoft/.test(n))s-=12;
-  if(/robot|compact/.test(n))s+=30;
-  return s
+function setActiveToken(i){$$('#reader .token').forEach(x=>x.classList.toggle('active',Number(x.dataset.i)===i))}
+function words(s){return s.toLowerCase().replace(/[^a-z' ]/g,' ').split(/\s+/).filter(Boolean)}
+function matchRatio(a,b){const A=words(a),B=words(b),m=A.length,n=B.length,dp=Array.from({length:m+1},()=>Array(n+1).fill(0));for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)dp[i][j]=A[i-1]===B[j-1]?dp[i-1][j-1]+1:Math.max(dp[i-1][j],dp[i][j-1]);return m?dp[m][n]/m:0}
+function analyze(spoken){
+  setStep('practice');const exp=words(currentText),got=words(spoken),m=exp.length,n=got.length,dp=Array.from({length:m+1},()=>Array(n+1).fill(0));
+  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)dp[i][j]=exp[i-1]===got[j-1]?dp[i-1][j-1]+1:Math.max(dp[i-1][j],dp[i][j-1]);
+  const good=Array(m).fill(false);let i=m,j=n;while(i&&j){if(exp[i-1]===got[j-1]){good[i-1]=true;i--;j--}else if(dp[i-1][j]>=dp[i][j-1])i--;else j--}
+  const bad=good.map((v,k)=>v?-1:k).filter(k=>k>=0),correct=m-bad.length,match=m?Math.round(correct/m*100):0;
+  renderText(bad);$('#correctCount').textContent=correct;$('#practiceCount').textContent=bad.length;$('#matchCount').textContent=match+'%';$('#results').classList.remove('hidden');$('#retryBtn').classList.remove('hidden');
+  const unique=[...new Set(bad.map(k=>exp[k]))];renderPractice(unique);
+  setStatus(bad.length?'יפה. סימנו את המקומות שלא זוהו בהתאמה לטקסט.':'מצוין. כל המילים זוהו בהתאמה לטקסט.');
 }
-function loadVoices(){
-  const all=speechSynthesis.getVoices();englishVoices=all.filter(v=>/^en[-_]US$/i.test(v.lang));const sel=$('voice');
-  if(!englishVoices.length){sel.innerHTML='<option>US English · ברירת מחדל</option>';return}
-  englishVoices.sort((a,b)=>voiceScore(a)-voiceScore(b)||a.name.localeCompare(b.name));
-  sel.innerHTML=englishVoices.map((v,i)=>'<option value="'+i+'">'+v.name.replace(/^Microsoft |^Google /,'')+'</option>').join('');
-  sel.selectedIndex=0
+function renderPractice(list){
+  if(!list.length){$('#practicePanel').classList.add('hidden');return}
+  $('#practicePanel').classList.remove('hidden');$('#wordList').innerHTML=list.map(w=>'<button class="word-pill" data-word="'+esc(w)+'">'+esc(w)+'</button>').join('');
+  $$('#wordList .word-pill').forEach(b=>b.onclick=()=>say(b.dataset.word,.78))
 }
-loadVoices();speechSynthesis.onvoiceschanged=loadVoices;
-function chosenVoice(){return englishVoices[Number($('voice').value)]||null}
-function stopSpeaking(updateStatus=false){
-  speechSynthesis.cancel();
-  isSpeaking=false;
-  $('speak').classList.remove('speaking');
-  $('speak').textContent='🔊 הקרא לי';
-  if(updateStatus)setStatus('⏹ ההקראה נעצרה. אפשר להמשיך להקשיב או לעבור לקריאה.',false);
-}
+function setStatus(t,listening=false){const el=$('#status');el.innerHTML=t;el.classList.toggle('listening',listening)}
+function resetSteps(){$$('.step').forEach(x=>x.classList.remove('active'));$('#stepListen').classList.add('active')}
+function setStep(s){$$('.step').forEach(x=>x.classList.remove('active'));$('#step'+s[0].toUpperCase()+s.slice(1)).classList.add('active')}
+
+function scoreVoice(v){const n=v.name.toLowerCase();let s=100;if(/jenny.*natural|ava.*natural|aria.*natural|guy.*natural/.test(n))s-=60;else if(/natural/.test(n))s-=50;if(/google us english/.test(n))s-=45;if(/samantha/.test(n))s-=40;if(/premium|enhanced/.test(n))s-=35;if(/microsoft/.test(n))s-=12;return s}
+function loadVoices(){voices=speechSynthesis.getVoices().filter(v=>/^en[-_]US$/i.test(v.lang)).sort((a,b)=>scoreVoice(a)-scoreVoice(b)||a.name.localeCompare(b.name));const sel=$('#voiceSelect');if(!voices.length){sel.innerHTML='<option>US English</option>';return}sel.innerHTML=voices.map((v,i)=>'<option value="'+i+'">'+esc(v.name.replace(/^Microsoft |^Google /,''))+'</option>').join('');sel.selectedIndex=0}
+function chosenVoice(){return voices[Number($('#voiceSelect').value)]||null}
 function say(text,rate=speechRate,opts={}){
-  if(isSpeaking&&!opts.main){
-    speechSynthesis.cancel();isSpeaking=false;
-    $('speak').classList.remove('speaking');$('speak').textContent='🔊 הקרא לי';
-  }else speechSynthesis.cancel();
-  let u=new SpeechSynthesisUtterance(text),v=chosenVoice();
-  if(v){u.voice=v;u.lang='en-US'}else u.lang='en-US';
-  u.rate=rate;
-  u.pitch=1.02;
-  u.volume=1;
-  u.onstart=()=>{if(opts.main){isSpeaking=true;$('speak').classList.add('speaking');$('speak').textContent='⏹ עצור הקראה'}if(opts.onstart)opts.onstart()};
-  u.onend=()=>{if(opts.main){isSpeaking=false;$('speak').classList.remove('speaking');$('speak').textContent='🔊 הקרא לי'}if(opts.onend)opts.onend()};
-  u.onerror=()=>{if(opts.main){isSpeaking=false;$('speak').classList.remove('speaking');$('speak').textContent='🔊 הקרא לי'}};
+  if(isSpeaking&&!opts.main){speechSynthesis.cancel();isSpeaking=false;$('#listenBtn').textContent='הקרא לי'}
+  else speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text),v=chosenVoice();if(v)u.voice=v;u.lang='en-US';u.rate=rate;u.pitch=1.02;
+  u.onstart=()=>{if(opts.main){isSpeaking=true;$('#listenBtn').textContent='עצור הקראה'}};
+  u.onboundary=e=>{if(opts.main&&typeof e.charIndex==='number'){let idx=0;for(let k=0;k<currentTokens.length;k++)if(currentTokens[k].start<=e.charIndex)idx=k;setActiveToken(idx)}};
+  u.onend=()=>{if(opts.main){isSpeaking=false;$('#listenBtn').textContent='הקרא לי';setActiveToken(-1);setStatus('סיימנו להקשיב. עכשיו תורך לקרוא.')}};
+  u.onerror=()=>{if(opts.main){isSpeaking=false;$('#listenBtn').textContent='הקרא לי';setActiveToken(-1)}};
   speechSynthesis.speak(u)
 }
-$('lessonBack').onclick=()=>{
-  stopSpeaking(false);
-  if(rec&&isListening){try{rec.abort()}catch(e){}}
-  isListening=false;
-  $('learn').classList.add('hidden');
-  $('setup').classList.remove('hidden');
-  if(lessonSource==='kids') showMode('kids'); else showMode('text');
-  window.scrollTo({top:0,behavior:'smooth'});
-};
-$('voiceTest').onclick=()=>say("Hello! Let's read English together.");
-$('speak').onclick=()=>{
-  if(isSpeaking){stopSpeaking(true);return}
-  document.querySelectorAll('.lesson-step').forEach(x=>x.classList.remove('active'));$('stepListen').classList.add('active');
-  say(original,speechRate,{main:true,onend:()=>setStatus('סיימנו להקשיב. עכשיו לחץ על <b>עכשיו אני קורא</b>.',false)});
-  setStatus('🔊 מקשיבים לטקסט בקצב '+(speechRate<.7?'איטי':speechRate>1?'מהיר':'רגיל')+'... אפשר לעצור בכל רגע.',false)
+function stopSpeaking(){speechSynthesis.cancel();isSpeaking=false;$('#listenBtn').textContent='הקרא לי';setActiveToken(-1)}
+function stopAll(){stopSpeaking();if(recognition&&isListening){try{recognition.abort()}catch(e){}}isListening=false}
+
+$('#listenBtn').onclick=()=>{if(isSpeaking){stopSpeaking();setStatus('ההקראה נעצרה.');return}setStep('listen');say(currentText,speechRate,{main:true});setStatus('מקשיבים לטקסט. אפשר לעצור בכל רגע.')};
+$('#voicePreview').onclick=()=>say("Hello. Let's read together.",.92);
+$$('.speed-row button').forEach(b=>b.onclick=()=>{speechRate=Number(b.dataset.rate);$$('.speed-row button').forEach(x=>x.classList.remove('active'));b.classList.add('active');if(isSpeaking){stopSpeaking();$('#listenBtn').click()}});
+$('#readBtn').onclick=()=>startRecognition();
+$('#stopReadBtn').onclick=()=>recognition?.stop();
+$('#retryBtn').onclick=()=>{renderText();$('#results').classList.add('hidden');$('#practicePanel').classList.add('hidden');$('#retryBtn').classList.add('hidden');$('#live').textContent='';setStep('read');startRecognition()};
+
+function startRecognition(){
+  stopSpeaking();const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){setStatus('זיהוי דיבור נתמך בעיקר ב-Chrome.');return}
+  setStep('read');lastTranscript='';let finalText='',hadError=false;recognition=new SR();recognition.lang='en-US';recognition.continuous=true;recognition.interimResults=true;
+  recognition.onstart=()=>{isListening=true;$('#readBtn').classList.add('hidden');$('#stopReadBtn').classList.remove('hidden');setStatus('<span class="pulse"></span> מקשיב עכשיו. קרא בקול.',true)};
+  recognition.onresult=e=>{let interim='';for(let i=e.resultIndex;i<e.results.length;i++){const t=e.results[i][0].transcript.trim();if(e.results[i].isFinal)finalText+=(finalText?' ':'')+t;else interim+=(interim?' ':'')+t}lastTranscript=(finalText+' '+interim).trim();$('#live').textContent=lastTranscript?'Heard: '+lastTranscript.split(/\s+/).slice(-12).join(' '):''};
+  recognition.onerror=e=>{hadError=e.error!=='aborted';if(e.error==='not-allowed')setStatus('לא התקבלה הרשאה למיקרופון. אשרו שימוש במיקרופון ונסו שוב.');else if(e.error!=='aborted')setStatus('לא הצלחתי לשמוע היטב. נסו שוב.')};
+  recognition.onend=()=>{isListening=false;$('#readBtn').classList.remove('hidden');$('#stopReadBtn').classList.add('hidden');$('#status').classList.remove('listening');if(hadError)return;if(lastTranscript)analyze(lastTranscript);else setStatus('לא זוהה דיבור. נסה שוב.')};
+  recognition.start()
 }
-document.querySelectorAll('.speed button').forEach(b=>b.onclick=()=>{speechRate=Number(b.dataset.rate);document.querySelectorAll('.speed button').forEach(x=>x.classList.remove('active'));b.classList.add('active');if(isSpeaking){stopSpeaking(false);$('speak').click()}})
-function setStatus(html,listening){$('status').innerHTML=html;$('status').classList.toggle('listening',listening)}
-function resetReading(){stopSpeaking(false);if(rec&&isListening){try{rec.abort()}catch(e){}}isListening=false;transcript='';render();$('practice').classList.add('hidden');$('resultStrip').classList.add('hidden');$('live').textContent='';$('read').textContent='🎤 עכשיו אני קורא';setStatus('מוכנים לקריאה חדשה. לחץ על המיקרופון והתחל לקרוא.',false)}
-$('restart').onclick=resetReading;
-$('read').onclick=()=>{if(isListening){rec.stop();return}startRecognition()}
-function startRecognition(){stopSpeaking(false);document.querySelectorAll('.lesson-step').forEach(x=>x.classList.remove('active'));$('stepRead').classList.add('active');const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){setStatus('זיהוי דיבור אינו נתמך בדפדפן הזה. מומלץ לפתוח ב-Chrome.',false);return}transcript='';rec=new SR();rec.lang='en-US';rec.continuous=true;rec.interimResults=true;let finalText='',recHadError=false;
-rec.onstart=()=>{isListening=true;$('read').textContent='⏹ סיים קריאה';setStatus('<span class="pulse"></span><b>מקשיב עכשיו...</b> קרא את הטקסט בקול.',true)}
-rec.onresult=e=>{let interim='';for(let i=e.resultIndex;i<e.results.length;i++){let t=e.results[i][0].transcript.trim();if(e.results[i].isFinal)finalText+=(finalText?' ':'')+t;else interim+=(interim?' ':'')+t}transcript=(finalText+' '+interim).trim();$('live').textContent=transcript?'שומע אותך... '+transcript.split(/\s+/).slice(-10).join(' '):''}
-rec.onerror=e=>{recHadError=e.error!=='aborted';if(e.error==='not-allowed')setStatus('לא התקבלה הרשאה למיקרופון. אשר שימוש במיקרופון בדפדפן ונסה שוב.',false);else if(e.error!=='aborted')setStatus('לא הצלחתי לשמוע. אפשר ללחוץ ולנסות שוב.',false)}
-rec.onend=()=>{let was=isListening;isListening=false;$('read').textContent='🎤 קרא שוב';$('status').classList.remove('listening');if(recHadError)return;if(was&&transcript)analyze(transcript);else if(was)setStatus('לא זיהיתי דיבור. לחץ על "קרא שוב" ונסה שוב.',false)}
-try{rec.start()}catch(e){setStatus('המיקרופון לא התחיל. נסה שוב.',false)}}
-function analyze(spoken){
-  document.querySelectorAll('.lesson-step').forEach(x=>x.classList.remove('active'));$('stepPractice').classList.add('active');
-  const expected=words(original),said=words(spoken),m=expected.length,n=said.length;
-  const dp=Array.from({length:m+1},()=>Array(n+1).fill(0));
-  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)dp[i][j]=expected[i-1]===said[j-1]?dp[i-1][j-1]+1:Math.max(dp[i-1][j],dp[i][j-1]);
-  const good=Array(m).fill(false);let i=m,j=n;
-  while(i&&j){if(expected[i-1]===said[j-1]){good[i-1]=true;i--;j--}else if(dp[i-1][j]>=dp[i][j-1])i--;else j--}
-  const missingIndexes=good.map((v,idx)=>v?-1:idx).filter(idx=>idx>=0);
-  render(missingIndexes);
-  const practice=missingIndexes.length,correct=m-practice,match=m?Math.round(correct/m*100):0;
-  setStatus(practice?'👏 יפה! יש <b>'+practice+'</b> מופעים שכדאי לתרגל. זהו משוב על <b>התאמה לטקסט</b>, לא ציון הגייה.':'🎉 מצוין! כל המילים זוהו בהתאמה לטקסט. זה אינו ציון הגייה.',false);
-  showPractice([...new Set(missingIndexes.map(idx=>expected[idx]))]);
-  $('correctCount').textContent=correct;$('practiceCount').textContent=practice;$('accuracyCount').textContent=match+'%';$('resultStrip').classList.remove('hidden')
+
+$('#quizBtn').onclick=()=>buildQuiz();
+function buildQuiz(){
+  setStep('understand');const quiz=$('#quiz');quiz.innerHTML='';quiz.classList.remove('hidden');
+  const qs=currentStory?.questions||buildCloze(currentText);
+  if(!qs.length){quiz.innerHTML='<div class="score">הטקסט קצר מדי ליצירת שאלות.</div>';return}
+  quiz.innerHTML=qs.map((x,i)=>'<div class="q" data-answer="'+esc(x.a)+'"><strong>'+(i+1)+'. '+esc(x.q)+'</strong><div class="q-options">'+x.opts.map(o=>'<button class="q-option" data-o="'+esc(o)+'">'+esc(o)+'</button>').join('')+'</div></div>').join('')+'<div id="quizScore" class="score">ענו על השאלות</div>';
+  let answered=0,score=0;$$('.q').forEach(box=>$$('.q-option',box).forEach(()=>{}));
+  quiz.querySelectorAll('.q').forEach(box=>box.querySelectorAll('.q-option').forEach(btn=>btn.onclick=()=>{if(box.dataset.done)return;box.dataset.done='1';answered++;const good=btn.dataset.o===box.dataset.answer;btn.classList.add(good?'good':'bad');if(good)score++;if(!good){const correct=[...box.querySelectorAll('.q-option')].find(x=>x.dataset.o===box.dataset.answer);correct?.classList.add('good')}if(answered===quiz.querySelectorAll('.q').length)$('#quizScore').textContent='סיימת: '+score+' מתוך '+answered+' תשובות נכונות'}))
 }
-function showPractice(list){if(!list.length){$('practice').classList.add('hidden');return}$('practice').classList.remove('hidden');$('words').innerHTML=list.map(w=>'<button data-word="'+w+'">'+w+' 🔊</button>').join('');$('words').querySelectorAll('button').forEach(b=>b.onclick=()=>practiceWord(b.dataset.word))}
-function practiceWord(w){say(w,.7)}
-const stopWords=new Set(['the','and','with','that','this','from','they','them','have','has','had','was','were','are','is','for','his','her','their','into','about','after','before','very','then','when','where','what','who','why','how']);
-function buildComprehensionQuiz(){
-  const quiz=$('comprehensionQuiz'),sentences=original.split(/[.!?]+/).map(s=>s.trim()).filter(s=>s.split(/\s+/).length>=3);
-  const content=words(original).filter(w=>w.length>3&&!stopWords.has(w));
-  if(!sentences.length||content.length<2){quiz.classList.remove('hidden');quiz.innerHTML='<div class="comp-score">הטקסט קצר מדי ליצירת שאלות אוטומטיות.</div>';return}
-  const unique=[...new Set(content)],qs=[],count=Math.min(3,sentences.length);
-  for(let q=0;q<count;q++){
-    const sentence=sentences[q%sentences.length],sw=words(sentence).filter(w=>w.length>3&&!stopWords.has(w));
-    const answer=sw[Math.floor(sw.length/2)]||unique[q%unique.length];
-    const prompt=esc(sentence.replace(new RegExp('\\b'+answer+'\\b','i'),'_____'));
-    let distract=unique.filter(w=>w!==answer).slice(0,2);
-    while(distract.length<2)distract.push(['school','happy','today'][distract.length]);
-    const opts=[answer,...distract].sort(()=>Math.random()-.5);
-    qs.push('<div class="comp-q" data-answer="'+esc(answer)+'"><strong>'+(q+1)+'. איזו מילה משלימה נכון את המשפט?</strong><div dir="ltr" style="margin-bottom:10px;color:#354f82">'+prompt+'</div><div class="comp-options">'+opts.map(o=>'<button class="comp-option" data-option="'+esc(o)+'">'+esc(o)+'</button>').join('')+'</div></div>');
-  }
-  quiz.innerHTML=qs.join('')+'<div id="compScore" class="comp-score">ענו על השאלות</div>';quiz.classList.remove('hidden');
-  let answered=0,score=0;
-  quiz.querySelectorAll('.comp-q').forEach(box=>box.querySelectorAll('.comp-option').forEach(btn=>btn.onclick=()=>{
-    if(box.dataset.done)return;box.dataset.done='1';answered++;
-    const good=btn.dataset.option===box.dataset.answer;btn.classList.add(good?'good':'bad-answer');if(good)score++;
-    if(!good){const correct=[...box.querySelectorAll('.comp-option')].find(x=>x.dataset.option===box.dataset.answer);if(correct)correct.classList.add('good')}
-    if(answered===quiz.querySelectorAll('.comp-q').length)$('compScore').textContent='סיימת: '+score+' מתוך '+answered+' תשובות נכונות';
-  }));
+function buildCloze(text){
+  const sentences=text.split(/[.!?]+/).map(s=>s.trim()).filter(s=>words(s).length>=4),all=[...new Set(words(text).filter(w=>w.length>3))],out=[];
+  for(let i=0;i<Math.min(3,sentences.length);i++){const s=sentences[i],sw=words(s).filter(w=>w.length>3);if(!sw.length)continue;const a=sw[Math.floor(sw.length/2)],opts=[a,...all.filter(w=>w!==a).slice(0,2)].sort(()=>Math.random()-.5);out.push({q:s.replace(new RegExp('\\b'+a+'\\b','i'),'_____'),opts,a})}
+  return out
 }
-$('buildQuiz').onclick=buildComprehensionQuiz;
-$('newTextBtn').onclick=()=>{stopSpeaking(false);if(rec&&isListening){try{rec.abort()}catch(e){}}location.reload()};
+
+loadVoices();speechSynthesis.onvoiceschanged=loadVoices;
 </script>
-</body></html>
+</body>
+</html>
